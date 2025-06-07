@@ -3,21 +3,21 @@
 uint16_t Rocker_Value_BUFF[ADC_CHANNELS] = { 0 };
 
 /****
-	* @brief    	GPIO é…ç½®		  
-	* @param   		æ— 
-	* @return   	æ— 
+	* @brief    	GPIO ÅäÖÃ		  
+	* @param   		ÎŞ
+	* @return   	ÎŞ
 	* Sample usage:	EQUIPMENT_GPIO_Init();
     */
 void EQUIPMENT_GPIO_Init()
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
-	//GPIO æ—¶é’Ÿä½¿èƒ½
+	//GPIO Ê±ÖÓÊ¹ÄÜ
 	ROCKER_ADCx_GPIO_AHBxClockCMD(ROCKER_ADCx_GPIO_CLK | Electricity_ADCx_GPIO_CLK,ENABLE);
 	//GPIO	
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AN;		//æ¨¡æ‹Ÿè¾“å…¥
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AN;		//Ä£ÄâÊäÈë
 	GPIO_InitStruct.GPIO_Pin = ROCKER_ADCL1_Pin | ROCKER_ADCL2_Pin | 
 							   ROCKER_ADCR1_Pin | ROCKER_ADCR2_Pin | Electricity_ADC_Pin;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL; 	//ä¸ä¸Šä¸‹æ‹‰ç”µé˜»
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL; 	//²»ÉÏÏÂÀ­µç×è
 	GPIO_Init(ROCKER_ADCx_GPIO_PORT,&GPIO_InitStruct);
 	GPIO_Init(Electricity_ADCx_GPIO_PORT,&GPIO_InitStruct);
 }
@@ -25,60 +25,60 @@ void EQUIPMENT_GPIO_Init()
 /*
 typedef struct
 {
-  uint32_t DMA_Channel;      			//é€šé“é€‰æ‹©
-  uint32_t DMA_PeripheralBaseAddr;		//å¤–è®¾åœ°å€
-  uint32_t DMA_Memory0BaseAddr;  		//å­˜å‚¨å™¨0åœ°å€
-  uint32_t DMA_DIR;       				//ä¼ è¾“æ–¹å‘
-  uint32_t DMA_BufferSize;    			//æ•°æ®æ•°ç›®
-  uint32_t DMA_PeripheralInc;  			//å¤–è®¾é€’å¢
-  uint32_t DMA_MemoryInc;       		//å­˜å‚¨å™¨é€’å¢
-  uint32_t DMA_PeripheralDataSize; 		//å¤–è®¾æ•°æ®å®½åº¦
-  uint32_t DMA_MemoryDataSize;  		//å­˜å‚¨å™¨æ•°æ®å®½åº¦
-  uint32_t DMA_Mode;     				//æ¨¡å¼é€‰æ‹©
-  uint32_t DMA_Priority;    			//ä¼˜å…ˆçº§
-  uint32_t DMA_FIFOMode;       			//FIFO æ¨¡å¼
-  uint32_t DMA_FIFOThreshold;  			//FIFO é˜ˆå€¼
-  uint32_t DMA_MemoryBurst; 			//å­˜å‚¨å™¨çªå‘ä¼ è¾“
-  uint32_t DMA_PeripheralBurst;     	//å¤–è®¾çªå‘ä¼ è¾“
+  uint32_t DMA_Channel;      			//Í¨µÀÑ¡Ôñ
+  uint32_t DMA_PeripheralBaseAddr;		//ÍâÉèµØÖ·
+  uint32_t DMA_Memory0BaseAddr;  		//´æ´¢Æ÷0µØÖ·
+  uint32_t DMA_DIR;       				//´«Êä·½Ïò
+  uint32_t DMA_BufferSize;    			//Êı¾İÊıÄ¿
+  uint32_t DMA_PeripheralInc;  			//ÍâÉèµİÔö
+  uint32_t DMA_MemoryInc;       		//´æ´¢Æ÷µİÔö
+  uint32_t DMA_PeripheralDataSize; 		//ÍâÉèÊı¾İ¿í¶È
+  uint32_t DMA_MemoryDataSize;  		//´æ´¢Æ÷Êı¾İ¿í¶È
+  uint32_t DMA_Mode;     				//Ä£Ê½Ñ¡Ôñ
+  uint32_t DMA_Priority;    			//ÓÅÏÈ¼¶
+  uint32_t DMA_FIFOMode;       			//FIFO Ä£Ê½
+  uint32_t DMA_FIFOThreshold;  			//FIFO ãĞÖµ
+  uint32_t DMA_MemoryBurst; 			//´æ´¢Æ÷Í»·¢´«Êä
+  uint32_t DMA_PeripheralBurst;     	//ÍâÉèÍ»·¢´«Êä
 }DMA_InitTypeDef;
 */
 /****
-	* @brief    	DMA é…ç½®		  
-	* @param   		æ— 
-	* @return   	æ— 
+	* @brief    	DMA ÅäÖÃ		  
+	* @param   		ÎŞ
+	* @return   	ÎŞ
 	* Sample usage:	EQUIPMENT_DMA_Init();
     */
 void EQUIPMENT_DMA_Init()
 {
 	DMA_InitTypeDef DMA_InitStruct;
-	DMA_DeInit(PERIPHERAL_DMAX_Stream);	//å°† DMA çš„æ‰€æœ‰å¯„å­˜å™¨é‡ç½®ä¸ºé»˜è®¤å€¼	
-	PERIPHERAL_DMAx_AHBxClockCMD(PERIPHERAL_DMAx_CLK,ENABLE);	//DMA æ—¶é’Ÿä½¿èƒ½
+	DMA_DeInit(PERIPHERAL_DMAX_Stream);	//½« DMA µÄËùÓĞ¼Ä´æÆ÷ÖØÖÃÎªÄ¬ÈÏÖµ	
+	PERIPHERAL_DMAx_AHBxClockCMD(PERIPHERAL_DMAx_CLK,ENABLE);	//DMA Ê±ÖÓÊ¹ÄÜ
 
-	DMA_InitStruct.DMA_BufferSize = ADC_CHANNELS;	//DMA ç¼“å†²åŒºå¤§å°
-	DMA_InitStruct.DMA_Channel = PERIPHERAL_DMAx_Channel;	//DMA é€šé“ 4
-	DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory;	//DMA æ•°æ®ä¼ è¾“æ–¹å‘ï¼šå¤–è®¾åˆ°å†…å­˜
-	DMA_InitStruct.DMA_FIFOMode = DMA_FIFOMode_Disable;		//ç¦æ­¢DMA FIFO ï¼Œä½¿ç”¨ç›´è¿æ¨¡å¼
-	DMA_InitStruct.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;	//DMA FIFO é˜ˆå€¼ï¼šåŠæ»¡
-	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)Rocker_Value_BUFF;		//DMA å†…å­˜åœ°å€;
-	DMA_InitStruct.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;	//DMA å†…å­˜æ•°æ®å¤§å°ï¼šåŠå­—
-	DMA_InitStruct.DMA_MemoryBurst = DMA_MemoryBurst_Single;	//DMA å†…å­˜çªå‘ä¼ è¾“æ¨¡å¼ï¼šå•æ¬¡ä¼ è¾“
-	DMA_InitStruct.DMA_MemoryInc = DMA_MemoryInc_Enable;		//DMA å†…å­˜åœ°å€è‡ªå¢ï¼šä½¿èƒ½
-	DMA_InitStruct.DMA_Mode = DMA_Mode_Circular;				//DMA æ¨¡å¼ï¼šå¾ªç¯æ¨¡å¼
-	DMA_InitStruct.DMA_PeripheralBaseAddr = (uint32_t)&EQUIPMENT_ADCx->DR;	//DMA å¤–è®¾åœ°å€
-	DMA_InitStruct.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;	//DMA å¤–è®¾çªå‘ä¼ è¾“æ¨¡å¼ï¼šå•æ¬¡ä¼ è¾“
-	DMA_InitStruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;	//DMA å¤–è®¾æ•°æ®å¤§å°ï¼šåŠå­—
-	DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;		//DMA å¤–è®¾åœ°å€è‡ªå¢ï¼šä½¿èƒ½
+	DMA_InitStruct.DMA_BufferSize = ADC_CHANNELS;	//DMA »º³åÇø´óĞ¡
+	DMA_InitStruct.DMA_Channel = PERIPHERAL_DMAx_Channel;	//DMA Í¨µÀ 4
+	DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory;	//DMA Êı¾İ´«Êä·½Ïò£ºÍâÉèµ½ÄÚ´æ
+	DMA_InitStruct.DMA_FIFOMode = DMA_FIFOMode_Disable;		//½ûÖ¹DMA FIFO £¬Ê¹ÓÃÖ±Á¬Ä£Ê½
+	DMA_InitStruct.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;	//DMA FIFO ãĞÖµ£º°ëÂú
+	DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)Rocker_Value_BUFF;		//DMA ÄÚ´æµØÖ·;
+	DMA_InitStruct.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;	//DMA ÄÚ´æÊı¾İ´óĞ¡£º°ë×Ö
+	DMA_InitStruct.DMA_MemoryBurst = DMA_MemoryBurst_Single;	//DMA ÄÚ´æÍ»·¢´«ÊäÄ£Ê½£ºµ¥´Î´«Êä
+	DMA_InitStruct.DMA_MemoryInc = DMA_MemoryInc_Enable;		//DMA ÄÚ´æµØÖ·×ÔÔö£ºÊ¹ÄÜ
+	DMA_InitStruct.DMA_Mode = DMA_Mode_Circular;				//DMA Ä£Ê½£ºÑ­»·Ä£Ê½
+	DMA_InitStruct.DMA_PeripheralBaseAddr = (uint32_t)&EQUIPMENT_ADCx->DR;	//DMA ÍâÉèµØÖ·
+	DMA_InitStruct.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;	//DMA ÍâÉèÍ»·¢´«ÊäÄ£Ê½£ºµ¥´Î´«Êä
+	DMA_InitStruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;	//DMA ÍâÉèÊı¾İ´óĞ¡£º°ë×Ö
+	DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;		//DMA ÍâÉèµØÖ·×ÔÔö£ºÊ¹ÄÜ
 	DMA_InitStruct.DMA_Priority = DMA_Priority_Medium;
 	DMA_Init(PERIPHERAL_DMAX_Stream,&DMA_InitStruct);
 
-	//ä½¿èƒ½ DMA ä¼ è¾“å®Œæˆä¸­æ–­
+	//Ê¹ÄÜ DMA ´«ÊäÍê³ÉÖĞ¶Ï
 	DMA_Cmd(PERIPHERAL_DMAX_Stream,ENABLE);
 }
 
 /****
-	* @brief    	ADC é…ç½®		  
-	* @param   		æ— 
-	* @return   	æ— 
+	* @brief    	ADC ÅäÖÃ		  
+	* @param   		ÎŞ
+	* @return   	ÎŞ
 	* Sample usage:	EQUIPMENT_ADC_Init();
     */
 void EQUIPMENT_ADC_Init()
@@ -87,23 +87,23 @@ void EQUIPMENT_ADC_Init()
 	ADC_CommonInitTypeDef ADC_CommonInitStruct;
 	ROCKER_ADCx_APBxClockCMD(ROCKER_ADCx_CLK,ENABLE);
 
-	ADC_CommonInitStruct.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled; 	//ç¦ç”¨DMAç›´æ¥è®¿é—®æ¨¡å¼
-	ADC_CommonInitStruct.ADC_Mode = ADC_Mode_Independent;			//ADCç‹¬ç«‹æ¨¡å¼
-	ADC_CommonInitStruct.ADC_Prescaler = ADC_Prescaler_Div4;		//ADCé¢„åˆ†é¢‘å™¨ 2åˆ†é¢‘
-	ADC_CommonInitStruct.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;		//é‡‡æ ·å»¶è¿Ÿ 5ä¸ªå‘¨æœŸ
+	ADC_CommonInitStruct.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled; 	//½ûÓÃDMAÖ±½Ó·ÃÎÊÄ£Ê½
+	ADC_CommonInitStruct.ADC_Mode = ADC_Mode_Independent;			//ADC¶ÀÁ¢Ä£Ê½
+	ADC_CommonInitStruct.ADC_Prescaler = ADC_Prescaler_Div4;		//ADCÔ¤·ÖÆµÆ÷ 2·ÖÆµ
+	ADC_CommonInitStruct.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;		//²ÉÑùÑÓ³Ù 5¸öÖÜÆÚ
 	ADC_CommonInit(&ADC_CommonInitStruct);
 
-	ADC_InitStruct.ADC_ContinuousConvMode = ENABLE;			//å¯ç”¨è¿ç»­è½¬æ¢æ¨¡å¼
-	ADC_InitStruct.ADC_DataAlign = ADC_DataAlign_Right;		//å³å¯¹é½
-	ADC_InitStruct.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;	//æ— å¤–éƒ¨è§¦å‘
-	//ä½¿ç”¨è½¯ä»¶è§¦å‘ï¼Œå¤–éƒ¨è§¦å‘ä¸ç”¨é…ç½®
+	ADC_InitStruct.ADC_ContinuousConvMode = ENABLE;			//ÆôÓÃÁ¬Ğø×ª»»Ä£Ê½
+	ADC_InitStruct.ADC_DataAlign = ADC_DataAlign_Right;		//ÓÒ¶ÔÆë
+	ADC_InitStruct.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;	//ÎŞÍâ²¿´¥·¢
+	//Ê¹ÓÃÈí¼ş´¥·¢£¬Íâ²¿´¥·¢²»ÓÃÅäÖÃ
 	//ADC_InitStruct.ADC_ExternalTrigConv = ;
-	ADC_InitStruct.ADC_NbrOfConversion = ADC_CHANNELS;		//é€šé“æ•°ç›®
-	ADC_InitStruct.ADC_Resolution = ADC_Resolution_12b;		//12ä½æ¨¡å¼
-	ADC_InitStruct.ADC_ScanConvMode = ENABLE;				//æ‰«ææ¨¡å¼
+	ADC_InitStruct.ADC_NbrOfConversion = ADC_CHANNELS;		//Í¨µÀÊıÄ¿
+	ADC_InitStruct.ADC_Resolution = ADC_Resolution_12b;		//12Î»Ä£Ê½
+	ADC_InitStruct.ADC_ScanConvMode = ENABLE;				//É¨ÃèÄ£Ê½
 	ADC_Init(EQUIPMENT_ADCx,&ADC_InitStruct);
 
-	//è®¾ç½®æŒ‡å®š ADC çš„è§„åˆ™ç»„é€šé“ï¼Œè®¾ç½®å®ƒä»¬çš„è½¬åŒ–é¡ºåºå’Œé‡‡æ ·æ—¶é—´
+	//ÉèÖÃÖ¸¶¨ ADC µÄ¹æÔò×éÍ¨µÀ£¬ÉèÖÃËüÃÇµÄ×ª»¯Ë³ĞòºÍ²ÉÑùÊ±¼ä
 	ADC_RegularChannelConfig(EQUIPMENT_ADCx,ROCKER_ADCx_Channel1,1,ADC_SampleTime_56Cycles);
 	ADC_RegularChannelConfig(EQUIPMENT_ADCx,ROCKER_ADCx_Channel2,2,ADC_SampleTime_56Cycles);
 	ADC_RegularChannelConfig(EQUIPMENT_ADCx,ROCKER_ADCx_Channel3,3,ADC_SampleTime_56Cycles);
@@ -112,17 +112,17 @@ void EQUIPMENT_ADC_Init()
 
 	ADC_DMARequestAfterLastTransferCmd(EQUIPMENT_ADCx,ENABLE);
 
-	ADC_DMACmd(EQUIPMENT_ADCx,ENABLE);		//ä½¿èƒ½ ADC DMA
+	ADC_DMACmd(EQUIPMENT_ADCx,ENABLE);		//Ê¹ÄÜ ADC DMA
 
-	ADC_Cmd(EQUIPMENT_ADCx,ENABLE);			//ä½¿èƒ½ ADC
+	ADC_Cmd(EQUIPMENT_ADCx,ENABLE);			//Ê¹ÄÜ ADC
 
-	ADC_SoftwareStartConv(EQUIPMENT_ADCx);	//è½¯ä»¶å¯åŠ¨ ADC è½¬æ¢
+	ADC_SoftwareStartConv(EQUIPMENT_ADCx);	//Èí¼şÆô¶¯ ADC ×ª»»
 }
 
 /****
-	* @brief    	æ‘‡æ† åˆå§‹åŒ–		  
-	* @param   		æ— 
-	* @return   	æ— 
+	* @brief    	Ò¡¸Ë ³õÊ¼»¯		  
+	* @param   		ÎŞ
+	* @return   	ÎŞ
 	* Sample usage:	EQUIPMENT_Init();
     */
 void EQUIPMENT_Init()	
@@ -133,48 +133,48 @@ void EQUIPMENT_Init()
 }
 
 /****
-	* @brief    	å¡å°”æ›¼æ»¤æ³¢
-	* @param   		*Value	æ•°æ®åœ°å€
-	* @return   	æ— 
+	* @brief    	¿¨¶ûÂüÂË²¨
+	* @param   		*Value	Êı¾İµØÖ·
+	* @return   	ÎŞ
 	* Sample usage:	KalmanFilter(Rocker_Value_BUFF[4]);
     */
 static void KalmanFilter(uint16_t *Value)
 {
-	static	float PrevDelta = 0;	//ä¸Šä¸€æ¬¡çš„é¢„æµ‹å€¼
-    static float R=0.0001;			//æµ‹é‡å™ªå£°æ–¹å·®
-    static float P=10;				//é¢„æµ‹å™ªå£°æ–¹å·®
-    static float K=0;				//å¡å°”æ›¼å¢ç›Š
-    static float Q=0.001;			//è¿‡ç¨‹å™ªå£°æ–¹å·®
-   	P = P + Q;						//é¢„æµ‹
-	K = P / (P + R);				//è®¡ç®—å¡å°”æ›¼å¢ç›Š
-	*Value = PrevDelta + (K * (*Value - PrevDelta));	//æ›´æ–°
-	P = (1 - K) * P;				//æ›´æ–°ä¼°è®¡è¯¯å·®åæ–¹å·®	
-	PrevDelta = *Value;				//æ›´æ–°ä¸Šä¸€æ¬¡çš„é¢„æµ‹å€¼
+	static	float PrevDelta = 0;	//ÉÏÒ»´ÎµÄÔ¤²âÖµ
+    static float R=0.0001;			//²âÁ¿ÔëÉù·½²î
+    static float P=10;				//Ô¤²âÔëÉù·½²î
+    static float K=0;				//¿¨¶ûÂüÔöÒæ
+    static float Q=0.001;			//¹ı³ÌÔëÉù·½²î
+   	P = P + Q;						//Ô¤²â
+	K = P / (P + R);				//¼ÆËã¿¨¶ûÂüÔöÒæ
+	*Value = PrevDelta + (K * (*Value - PrevDelta));	//¸üĞÂ
+	P = (1 - K) * P;				//¸üĞÂ¹À¼ÆÎó²îĞ­·½²î	
+	PrevDelta = *Value;				//¸üĞÂÉÏÒ»´ÎµÄÔ¤²âÖµ
 }
 
 /****
-	* @brief    ADC æ•°æ®å¤„ç†		  
-	* @param   	Value   å¤„ç†çš„æ•°æ®
-	* @return   æ—     	
+	* @brief    ADC Êı¾İ´¦Àí		  
+	* @param   	Value   ´¦ÀíµÄÊı¾İ
+	* @return   ÎŞ    	
 	* Sample usage:ROCKER_Calculate(&Value);
     */
 void ROCKER_Calculate(ROCKER_Value *Value)
 {
 	Value->ROCKER_RX_Value = (Rocker_Value_BUFF[0] - Y_ADC_MIN) * (Y_COORDINATE_MAX - Y_COORDINATE_MIN) / 
-                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//å³æ‘‡æ† X è½´åæ ‡
+                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//ÓÒÒ¡¸Ë X Öá×ø±ê
 	Value->ROCKER_RX_Value = (Rocker_Value_BUFF[1] - Y_ADC_MIN) * (Y_COORDINATE_MAX - Y_COORDINATE_MIN) / 
-                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//å³æ‘‡æ† Y è½´åæ ‡					 
+                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//ÓÒÒ¡¸Ë Y Öá×ø±ê					 
 	Value->ROCKER_RX_Value = (Rocker_Value_BUFF[2] - Y_ADC_MIN) * (Y_COORDINATE_MAX - Y_COORDINATE_MIN) / 
-                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//å·¦æ‘‡æ† X è½´åæ ‡
+                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//×óÒ¡¸Ë X Öá×ø±ê
 	Value->ROCKER_RX_Value = (Rocker_Value_BUFF[3] - Y_ADC_MIN) * (Y_COORDINATE_MAX - Y_COORDINATE_MIN) / 
-                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//å·¦æ‘‡æ† Y è½´åæ ‡
-	Value->ROCKER_RX_Value = (float)(Rocker_Value_BUFF[4] * 3.3 / 4095 * 3); 	//ç”µæ± ç”µå‹
+                             (Y_ADC_MAX - Y_ADC_MIN) + Y_COORDINATE_MIN;		//×óÒ¡¸Ë Y Öá×ø±ê
+	Value->ROCKER_RX_Value = (float)(Rocker_Value_BUFF[4] * 3.3 / 4095 * 3); 	//µç³ØµçÑ¹
 }
 
 /****
-	* @brief    ADC æ•°æ®å‘é€	  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    ADC Êı¾İ·¢ËÍ	  
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:ROCKER_DirSend(); 
     */
 void ROCKERData_Send()

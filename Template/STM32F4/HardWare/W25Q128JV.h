@@ -11,7 +11,7 @@
 //#define W25Q128JV_USE_DMAEN
 #define W25Q128JV_USE_DMADIS
 
-//W25Q128JV  å‘½ä»¤
+//W25Q128JV  ÃüÁî
 #define DUMMY                            	0x00
 #define W25Q128JV_JEDEC_ID                  0x9F
 #define W25Q128JV_WRITE_ENABLE              0x06
@@ -33,12 +33,12 @@
 #define W25Q128JV_ENABLE_RESET              0x66
 #define W25Q128JV_RESET                     0x99
 
-/*ç­‰å¾…è¶…æ—¶æ—¶é—´*/
+/*µÈ´ý³¬Ê±Ê±¼ä*/
 #define SPIT_FLAG_TIMEOUT                	((uint32_t)0x1000)
 #define SPIT_LONG_TIMEOUT                	((uint32_t)(10 * SPIT_FLAG_TIMEOUT))
 
 //#define W25QX_ERROR(fmt,arg...)          printf("W25QX_ERROR:>"fmt"\n",##arg)
-#define W25QX_ERROR(n)         			 	printf("W25QX_ERRO: ç­‰å¾…è¶…æ—¶! ERROR_CODE:> "#n"\n")
+#define W25QX_ERROR(n)         			 	printf("W25QX_ERRO: µÈ´ý³¬Ê±! ERROR_CODE:> "#n"\n")
 		
 #define W25Q128JV_SPI_CS(x)        		  	GPIO_WriteBit(W25Q128JV_SPI_CS_GPIO_PORT ,W25Q128JV_SPI_CS_GPIO_PIN,(BitAction)(x))
 //#define W25Q128JV_SPI_CSLOW				  GPIO_ResetBits(W25Q128JV_SPI_CS_GPIO_PORT ,W25Q128JV_SPI_CS_GPIO_PIN )

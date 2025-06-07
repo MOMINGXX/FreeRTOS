@@ -1,60 +1,60 @@
 #include "LCD_SPI.h"
 
-uint16_t DMA1_MEM_LEN;//ä¿å­˜DMAæ¯æ¬¡æ•°æ®ä¼ é€çš„é•¿åº¦ 
+uint16_t DMA1_MEM_LEN;//±£´æDMAÃ¿´ÎÊı¾İ´«ËÍµÄ³¤¶È 
 
 /****
-	* @brief    LCD GPIOé…ç½®		  
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief    LCD GPIOÅäÖÃ		  
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:LCD_GPIO_Config();
     */
 void LCD_GPIO_Config(void)
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
-	LCD_GPIO_AHBxClockCMD(LCD_GPIO_CLK, ENABLE);	 //ä½¿èƒ½
+	LCD_GPIO_AHBxClockCMD(LCD_GPIO_CLK, ENABLE);	 //Ê¹ÄÜ
 
-	GPIO_PinAFConfig(LCD_GPIO_PORT, LCD_SCL_GPIO_PINSOURCE, LCD_SPI_SCLK_AF);	//å¤ç”¨
-	GPIO_PinAFConfig(LCD_GPIO_PORT, LCD_SDA_GPIO_PINSOURCE, LCD_SPI_MOSI_AF);	//å¤ç”¨
+	GPIO_PinAFConfig(LCD_GPIO_PORT, LCD_SCL_GPIO_PINSOURCE, LCD_SPI_SCLK_AF);	//¸´ÓÃ
+	GPIO_PinAFConfig(LCD_GPIO_PORT, LCD_SDA_GPIO_PINSOURCE, LCD_SPI_MOSI_AF);	//¸´ÓÃ
 	
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF; 		 	//å¤ç”¨	
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;			//æ¨æŒ½
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF; 		 	//¸´ÓÃ	
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;			//ÍÆÍì
 	GPIO_InitStructure.GPIO_Pin = LCD_SCL_GPIO_PIN | LCD_SDA_GPIO_PIN;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;			//ä¸Šæ‹‰
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;		//é€Ÿåº¦ 100MHz
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;			//ÉÏÀ­
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;		//ËÙ¶È 100MHz
 	GPIO_Init(LCD_GPIO_PORT, &GPIO_InitStructure);	  		
 
-	GPIO_SetBits(LCD_GPIO_PORT, LCD_SCL_GPIO_PIN | LCD_SDA_GPIO_PIN);	//ä¸Šæ‹‰
+	GPIO_SetBits(LCD_GPIO_PORT, LCD_SCL_GPIO_PIN | LCD_SDA_GPIO_PIN);	//ÉÏÀ­
 }
 
 /****
-	* @brief    LCD SPIé…ç½®	  
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief    LCD SPIÅäÖÃ	  
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:LCD_SPIx_Config();
     */
 void LCD_SPIx_Config()
 {
 	SPI_InitTypeDef SPI_InitStruct;
-	LCD_SPIx_APBxClockCMD(LCD_SPIx_CLK,ENABLE);	 //ä½¿èƒ½ SPI
+	LCD_SPIx_APBxClockCMD(LCD_SPIx_CLK,ENABLE);	 //Ê¹ÄÜ SPI
 	
-	SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;     //æ³¢ç‰¹ç‡é¢„åˆ†é¢‘å€¼
-	SPI_InitStruct.SPI_CPHA = SPI_CPHA_2Edge;                           //(æ—¶é’Ÿç›¸ä½)ç¬¬äºŒä¸ªè·³å˜æ²¿ï¼ˆå³ä¸Šå‡æ²¿ï¼‰æ•°æ®è¢«é‡‡æ ·
-	SPI_InitStruct.SPI_CPOL = SPI_CPOL_High;                            //(æ—¶é’Ÿææ€§)ç©ºé—²çŠ¶æ€ä¸ºé«˜ç”µå¹³
-	SPI_InitStruct.SPI_CRCPolynomial = 7;                               //CRCæ ¡éªŒ  ä¸ä½¿ç”¨
-	SPI_InitStruct.SPI_DataSize = SPI_DataSize_8b;                      //æ•°æ®å¸§å¤§å°ä¸º8ä½
-	SPI_InitStruct.SPI_Direction = SPI_Direction_1Line_Tx;              //SPI è®¾ç½®ä¸ºå•çº¿ä»…å‘é€æ¨¡å¼
-	SPI_InitStruct.SPI_FirstBit = SPI_FirstBit_MSB;                     //æ•°æ®ä¼ è¾“ä» MSB ä½å¼€å§‹
-	SPI_InitStruct.SPI_Mode = SPI_Mode_Master;                          //ä¸ºä¸»æœº
-	SPI_InitStruct.SPI_NSS = SPI_NSS_Soft;                              //å†…éƒ¨ NSS ä¿¡å·æœ‰ SSI ä½æ§åˆ¶
+	SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;     //²¨ÌØÂÊÔ¤·ÖÆµÖµ
+	SPI_InitStruct.SPI_CPHA = SPI_CPHA_2Edge;                           //(Ê±ÖÓÏàÎ»)µÚ¶ş¸öÌø±äÑØ£¨¼´ÉÏÉıÑØ£©Êı¾İ±»²ÉÑù
+	SPI_InitStruct.SPI_CPOL = SPI_CPOL_High;                            //(Ê±ÖÓ¼«ĞÔ)¿ÕÏĞ×´Ì¬Îª¸ßµçÆ½
+	SPI_InitStruct.SPI_CRCPolynomial = 7;                               //CRCĞ£Ñé  ²»Ê¹ÓÃ
+	SPI_InitStruct.SPI_DataSize = SPI_DataSize_8b;                      //Êı¾İÖ¡´óĞ¡Îª8Î»
+	SPI_InitStruct.SPI_Direction = SPI_Direction_1Line_Tx;              //SPI ÉèÖÃÎªµ¥Ïß½ö·¢ËÍÄ£Ê½
+	SPI_InitStruct.SPI_FirstBit = SPI_FirstBit_MSB;                     //Êı¾İ´«Êä´Ó MSB Î»¿ªÊ¼
+	SPI_InitStruct.SPI_Mode = SPI_Mode_Master;                          //ÎªÖ÷»ú
+	SPI_InitStruct.SPI_NSS = SPI_NSS_Soft;                              //ÄÚ²¿ NSS ĞÅºÅÓĞ SSI Î»¿ØÖÆ
 	SPI_Init(LCD_SPIx,&SPI_InitStruct);
 
 	SPI_Cmd(LCD_SPIx,ENABLE);
 }
 
 /****
-	* @brief    LCD SPI åˆå§‹åŒ–			  
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief    LCD SPI ³õÊ¼»¯			  
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:LCD_SPIx_Init();
     */
 void LCD_SPIx_Init()
@@ -64,15 +64,15 @@ void LCD_SPIx_Init()
 }
 
 /****
-	* @brief    LCD SPI SPI å‘é€ ä¸€ä¸ªå­—èŠ‚æ•°æ® 			  
-	* @param   	Byte	å‘é€çš„æ•°æ®
-	* @return   æ— 
+	* @brief    LCD SPI SPI ·¢ËÍ Ò»¸ö×Ö½ÚÊı¾İ 			  
+	* @param   	Byte	·¢ËÍµÄÊı¾İ
+	* @return   ÎŞ
 	* Sample usage:LCD_SPI_WriteByte(0x56);
     */
 void LCD_SPI_WriteByte(uint8_t Byte)
 {
-	while(RESET == SPI_I2S_GetFlagStatus(LCD_SPIx,SPI_I2S_FLAG_TXE));	//ç­‰å¾…å‘é€ç¼“å†²åŒºä¸ºç©º
-	SPI_I2S_SendData(LCD_SPIx,Byte);									//å‘é€ä¸€ä¸ªå­—èŠ‚çš„æ•°æ®
-	while(RESET != SPI_I2S_GetFlagStatus(LCD_SPIx,SPI_I2S_FLAG_BSY));  	//ç­‰å¾…å‘é€å®Œæˆ
+	while(RESET == SPI_I2S_GetFlagStatus(LCD_SPIx,SPI_I2S_FLAG_TXE));	//µÈ´ı·¢ËÍ»º³åÇøÎª¿Õ
+	SPI_I2S_SendData(LCD_SPIx,Byte);									//·¢ËÍÒ»¸ö×Ö½ÚµÄÊı¾İ
+	while(RESET != SPI_I2S_GetFlagStatus(LCD_SPIx,SPI_I2S_FLAG_BSY));  	//µÈ´ı·¢ËÍÍê³É
 }
  

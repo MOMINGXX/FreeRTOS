@@ -7,11 +7,11 @@
 #include "USART.h"
 
 //#define MPU6050_ADDR    		0x68
-#define MPU6050_ADDR    		0xD0	//IIC地址，其中A0=0为0xD0，A0=1为0xD1
-#define	MPU6050_SMPLRT_DIV		0x19	//陀螺仪采样率，典型值：0x07(125Hz)
-#define	MPU6050_CONFIG			0x1A	//低通滤波频率，典型值：0x06(5Hz)
-#define	MPU6050_GYRO_CONFIG		0x1B	//陀螺仪自检及测量范围，典型值：0x18(不自检，2000deg/s)
-#define	MPU6050_ACCEL_CONFIG	0x1C	//加速计自检、测量范围及高通滤波频率，典型值：0x01(不自检，2G，5Hz)
+#define MPU6050_ADDR    		0xD0	//IIC��ַ������A0=0Ϊ0xD0��A0=1Ϊ0xD1
+#define	MPU6050_SMPLRT_DIV		0x19	//�����ǲ����ʣ�����ֵ��0x07(125Hz)
+#define	MPU6050_CONFIG			0x1A	//��ͨ�˲�Ƶ�ʣ�����ֵ��0x06(5Hz)
+#define	MPU6050_GYRO_CONFIG		0x1B	//�������Լ켰������Χ������ֵ��0x18(���Լ죬2000deg/s)
+#define	MPU6050_ACCEL_CONFIG	0x1C	//���ټ��Լ졢������Χ����ͨ�˲�Ƶ�ʣ�����ֵ��0x01(���Լ죬2G��5Hz)
 #define	MPU6050_ACCEL_XOUT_H	0x3B    
 #define	MPU6050_ACCEL_XOUT_L	0x3C    
 #define	MPU6050_ACCEL_YOUT_H	0x3D    
@@ -28,9 +28,9 @@
 #define	MPU6050_GYRO_ZOUT_L		0x48    
 #define	MPU6050_TMP_H	        0x1B    
 #define	MPU6050_TMP_L	        0x1C    
-#define	MPU6050_PWR_MGMT_1		0x6B	//电源管理，典型值：0x00(正常启用)
-#define	MPU6050_PWR_MGMT_2		0x6C	//电源管理，典型值：0x00(正常启用)
-#define	MPU6050_WHO_AM_I		0x75	//IIC地址寄存器(默认数值0x68，只读)
+#define	MPU6050_PWR_MGMT_1		0x6B	//��Դ����������ֵ��0x00(��������)
+#define	MPU6050_PWR_MGMT_2		0x6C	//��Դ����������ֵ��0x00(��������)
+#define	MPU6050_WHO_AM_I		0x75	//IIC��ַ�Ĵ���(Ĭ����ֵ0x68��ֻ��)
 
 //MPU6050 GPIO
 #define MPU6050_GPIO_CLK                RCC_AHB1Periph_GPIOA

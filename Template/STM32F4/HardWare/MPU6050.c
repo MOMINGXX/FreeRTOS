@@ -1,71 +1,71 @@
 #include "MPU6050.h"
 
 /****
-	* @brief    å…­è½´ä¼ æ„Ÿå™¨ å†™æ•°æ®			  
-	* @param   	RegAddress  å¯„å­˜å™¨åœ°å€
-    * @param   	Data        å†™å…¥çš„æ•°æ®
-	* @return   æ—     	
+	* @brief    ÁùÖá´«¸ĞÆ÷ Ğ´Êı¾İ			  
+	* @param   	RegAddress  ¼Ä´æÆ÷µØÖ·
+    * @param   	Data        Ğ´ÈëµÄÊı¾İ
+	* @return   ÎŞ    	
 	* Sample usage:MPU6050_WriteReg(MPU6050_PWR_MGMT_1,0x01);
     */
 void MPU6050_WriteReg(uint8_t RegAddress,uint8_t Data)
 {
-    MPU6050_I2C_Start();                    //I2Cèµ·å§‹ä¿¡å·
-    MPU6050_I2C_SendByte(MPU6050_ADDR);     //å‘é€ MPU6050 è®¾å¤‡åœ°å€
-    MPU6050_I2C_ReceiveAck();               //ç­‰å¾…ACK
-    MPU6050_I2C_SendByte(RegAddress);       //å‘é€è¦å†™å…¥çš„å¯„å­˜å™¨åœ°å€
-    MPU6050_I2C_ReceiveAck();               //ç­‰å¾…ACK
-    MPU6050_I2C_SendByte(Data);             //å‘é€è¦å†™å…¥çš„æ•°æ®
-    MPU6050_I2C_ReceiveAck();               //ç­‰å¾…ACK
-    MPU6050_I2C_Stop();                     //I2Cåœæ­¢ä¿¡å·
+    MPU6050_I2C_Start();                    //I2CÆğÊ¼ĞÅºÅ
+    MPU6050_I2C_SendByte(MPU6050_ADDR);     //·¢ËÍ MPU6050 Éè±¸µØÖ·
+    MPU6050_I2C_ReceiveAck();               //µÈ´ıACK
+    MPU6050_I2C_SendByte(RegAddress);       //·¢ËÍÒªĞ´ÈëµÄ¼Ä´æÆ÷µØÖ·
+    MPU6050_I2C_ReceiveAck();               //µÈ´ıACK
+    MPU6050_I2C_SendByte(Data);             //·¢ËÍÒªĞ´ÈëµÄÊı¾İ
+    MPU6050_I2C_ReceiveAck();               //µÈ´ıACK
+    MPU6050_I2C_Stop();                     //I2CÍ£Ö¹ĞÅºÅ
 }
 
 /****
-	* @brief    å…­è½´ä¼ æ„Ÿå™¨ è¯»å–æ•°æ®		  
-	* @param   	RegAddress  å¯„å­˜å™¨åœ°å€
-	* @return   Data        è¯»å–çš„æ•°æ®   	
+	* @brief    ÁùÖá´«¸ĞÆ÷ ¶ÁÈ¡Êı¾İ		  
+	* @param   	RegAddress  ¼Ä´æÆ÷µØÖ·
+	* @return   Data        ¶ÁÈ¡µÄÊı¾İ   	
 	* Sample usage:MPU6050_ReadReg(MPU6050_PWR_MGMT_1);
     */
 uint8_t MPU6050_ReadReg(uint8_t RegAddress)
 {
-    uint8_t Data = 0;                           //å®šä¹‰ä¸€ä¸ªå˜é‡ç”¨äºå­˜å‚¨è¯»å–çš„æ•°æ®
-    MPU6050_I2C_Start();                        //I2Cèµ·å§‹ä¿¡å·
-    MPU6050_I2C_SendByte(MPU6050_ADDR);         //å‘é€ MPU6050 è®¾å¤‡åœ°å€
-    MPU6050_I2C_ReceiveAck();            //ç­‰å¾…ACK           //å‘é€è¦è¯»å–çš„å¯„å­˜å™¨åœ°å€
-    MPU6050_I2C_SendByte(RegAddress);           //å‘é€è¦è¯»å–çš„å¯„å­˜å™¨åœ°å€
-    MPU6050_I2C_ReceiveAck();                   //ç­‰å¾…ACK
+    uint8_t Data = 0;                           //¶¨ÒåÒ»¸ö±äÁ¿ÓÃÓÚ´æ´¢¶ÁÈ¡µÄÊı¾İ
+    MPU6050_I2C_Start();                        //I2CÆğÊ¼ĞÅºÅ
+    MPU6050_I2C_SendByte(MPU6050_ADDR);         //·¢ËÍ MPU6050 Éè±¸µØÖ·
+    MPU6050_I2C_ReceiveAck();            //µÈ´ıACK           //·¢ËÍÒª¶ÁÈ¡µÄ¼Ä´æÆ÷µØÖ·
+    MPU6050_I2C_SendByte(RegAddress);           //·¢ËÍÒª¶ÁÈ¡µÄ¼Ä´æÆ÷µØÖ·
+    MPU6050_I2C_ReceiveAck();                   //µÈ´ıACK
 
-    MPU6050_I2C_Start();                        //I2Cèµ·å§‹ä¿¡å·
-    MPU6050_I2C_SendByte(MPU6050_ADDR|0x01);    //å‘é€ MPU6050 è®¾å¤‡åœ°å€+1 è¯»
-    MPU6050_I2C_ReceiveAck();                   //ç­‰å¾…ACK
-    Data = MPU6050_I2C_ReceiveByte();           //è¯»å–æ•°æ®
-    MPU6050_I2C_SendAck(1);                     //ç­‰å¾…ACK
-    MPU6050_I2C_Stop();                         //I2Cåœæ­¢ä¿¡å·
-    return Data;                                //è¿”å›è¯»å–çš„æ•°æ®
+    MPU6050_I2C_Start();                        //I2CÆğÊ¼ĞÅºÅ
+    MPU6050_I2C_SendByte(MPU6050_ADDR|0x01);    //·¢ËÍ MPU6050 Éè±¸µØÖ·+1 ¶Á
+    MPU6050_I2C_ReceiveAck();                   //µÈ´ıACK
+    Data = MPU6050_I2C_ReceiveByte();           //¶ÁÈ¡Êı¾İ
+    MPU6050_I2C_SendAck(1);                     //µÈ´ıACK
+    MPU6050_I2C_Stop();                         //I2CÍ£Ö¹ĞÅºÅ
+    return Data;                                //·µ»Ø¶ÁÈ¡µÄÊı¾İ
 }
 
 /****
-	* @brief    å…­è½´ä¼ æ„Ÿå™¨ åˆå§‹åŒ–		  
-	* @param   	æ— 
-	* @return   æ— 	
+	* @brief    ÁùÖá´«¸ĞÆ÷ ³õÊ¼»¯		  
+	* @param   	ÎŞ
+	* @return   ÎŞ	
 	* Sample usage:MPU6050_Init();
     */
 void MPU6050_Init(void)
 {
     MPU6050_I2C_Config();
-    MPU6050_WriteReg(MPU6050_PWR_MGMT_1,0x80);		//å¤ä½
+    MPU6050_WriteReg(MPU6050_PWR_MGMT_1,0x80);		//¸´Î»
 	Delay_ms(100);
-    MPU6050_WriteReg(MPU6050_PWR_MGMT_1,0x01);		//ç”µæºç®¡ç†å¯„å­˜å™¨1  è§£é™¤ä¼‘çœ çŠ¶æ€ é€‰ç”¨Xè½´é™€èºä»ªæ—¶é’Ÿ
-	MPU6050_WriteReg(MPU6050_PWR_MGMT_2,0x00);		//ç”µæºç®¡ç†å¯„å­˜å™¨2  6è½´å‡ä¸å¾…æœº
-	MPU6050_WriteReg(MPU6050_SMPLRT_DIV,0x07);		//é‡‡æ ·ç‡åˆ†é¢‘       é™€èºä»ª125hz
-	MPU6050_WriteReg(MPU6050_CONFIG,0x06);			//ä½é€šæ»¤æ³¢é¢‘ç‡
-	MPU6050_WriteReg(MPU6050_GYRO_CONFIG,0x18);		//é™€èºä»ª        2000åº¦/ç§’  16.4
-	MPU6050_WriteReg(MPU6050_ACCEL_CONFIG,0x18);	//åŠ é€Ÿåº¦è®¡     16g  2048
+    MPU6050_WriteReg(MPU6050_PWR_MGMT_1,0x01);		//µçÔ´¹ÜÀí¼Ä´æÆ÷1  ½â³ıĞİÃß×´Ì¬ Ñ¡ÓÃXÖáÍÓÂİÒÇÊ±ÖÓ
+	MPU6050_WriteReg(MPU6050_PWR_MGMT_2,0x00);		//µçÔ´¹ÜÀí¼Ä´æÆ÷2  6Öá¾ù²»´ı»ú
+	MPU6050_WriteReg(MPU6050_SMPLRT_DIV,0x07);		//²ÉÑùÂÊ·ÖÆµ       ÍÓÂİÒÇ125hz
+	MPU6050_WriteReg(MPU6050_CONFIG,0x06);			//µÍÍ¨ÂË²¨ÆµÂÊ
+	MPU6050_WriteReg(MPU6050_GYRO_CONFIG,0x18);		//ÍÓÂİÒÇ        2000¶È/Ãë  16.4
+	MPU6050_WriteReg(MPU6050_ACCEL_CONFIG,0x18);	//¼ÓËÙ¶È¼Æ     16g  2048
 }
 
 /****
-	* @brief    å…­è½´ä¼ æ„Ÿå™¨ ID		  
-	* @param   	æ— 
-	* @return   IDå·          0X68
+	* @brief    ÁùÖá´«¸ĞÆ÷ ID		  
+	* @param   	ÎŞ
+	* @return   IDºÅ          0X68
 	* Sample usage:MPU6050_GetID();
     */
 uint8_t MPU6050_GetID()
@@ -74,9 +74,9 @@ uint8_t MPU6050_GetID()
 }
 
 /****
-	* @brief    å…­è½´ä¼ æ„Ÿå™¨ è¯»å–æ•°æ®		  
-	* @param   	Data    ç»“æ„ä½“åœ°å€
-	* @return   æ— 
+	* @brief    ÁùÖá´«¸ĞÆ÷ ¶ÁÈ¡Êı¾İ		  
+	* @param   	Data    ½á¹¹ÌåµØÖ·
+	* @return   ÎŞ
 	* Sample usage:MPU6050_GetData(&Data);
     */
 void MPU6050_GetData(MPU6050_Data *Data)
@@ -119,8 +119,8 @@ void SEND_OULA_ANGLE(int row,int pit,int yaw)
 	
 	for(i=0; i < (buf[3]+4); i++)
 	{
-		sumcheck += buf[i]; //ä»å¸§å¤´å¼€å§‹ï¼Œå¯¹æ¯ä¸€å­—èŠ‚è¿›è¡Œæ±‚å’Œï¼Œç›´åˆ°DATAåŒºç»“æŸ
-		addcheck += sumcheck; //æ¯ä¸€å­—èŠ‚çš„æ±‚å’Œæ“ä½œï¼Œè¿›è¡Œä¸€æ¬¡sumcheckçš„ç´¯åŠ 
+		sumcheck += buf[i]; //´ÓÖ¡Í·¿ªÊ¼£¬¶ÔÃ¿Ò»×Ö½Ú½øĞĞÇóºÍ£¬Ö±µ½DATAÇø½áÊø
+		addcheck += sumcheck; //Ã¿Ò»×Ö½ÚµÄÇóºÍ²Ù×÷£¬½øĞĞÒ»´ÎsumcheckµÄÀÛ¼Ó
 	}
 	buf[11]=sumcheck;
 	buf[12]=addcheck;
@@ -129,13 +129,13 @@ void SEND_OULA_ANGLE(int row,int pit,int yaw)
 	
 }
 
-//MPU6050äº’è¡¥æ»¤æ³¢
+//MPU6050»¥²¹ÂË²¨
 void MPU6050_ComplementaryFilter(MPU6050_Data *Data,MPU6050_Calculate *Calculate)
 {
     float Accel_X,Accel_Y,Accel_Z;
     float Gyro_X,Gyro_Y,Gyro_Z;
     float AngleX,AngleY,AngleZ;
-    MPU6050_GetData(Data);//è¯»å–æ•°æ®
+    MPU6050_GetData(Data);//¶ÁÈ¡Êı¾İ
     Accel_X = Data->ACCEL_XOUT/16384.0;
     Accel_Y = Data->ACCEL_YOUT/16384.0;
     Accel_Z = Data->ACCEL_ZOUT/16384.0;

@@ -1,8 +1,8 @@
 #include "W25Q128JV.h"
 
 /****
-	* @brief	W25Q128JV åˆå§‹åŒ–  
-	* @param   	æ— 
+	* @brief	W25Q128JV ³õÊ¼»¯  
+	* @param   	ÎŞ
 	* @return   W25Q128JV_ID  	W25Q128JV
 	* Sample usage:W25Q128JV_Init();
     */
@@ -12,9 +12,9 @@ void W25Q128JV_Init()
 }
 
 /****
-	* @brief	W25Q128JV å”¤é†’ 
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief	W25Q128JV »½ĞÑ 
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_WakeUP();
     */
 void W25Q128JV_WakeUP()
@@ -25,9 +25,9 @@ void W25Q128JV_WakeUP()
 }
 
 /****
-	* @brief	W25Q128JV ä¼‘çœ 
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief	W25Q128JV ĞİÃß
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_WakeUP();
     */
 void W25Q128JV_Power_Down()
@@ -38,47 +38,47 @@ void W25Q128JV_Power_Down()
 }
 
 /****
-	* @brief	W25Q128JV å†™ä½¿èƒ½	  
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief	W25Q128JV Ğ´Ê¹ÄÜ	  
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Write_ENABLE();
     */
 void W25Q128JV_Write_ENABLE()
 {
     W25Q128JV_CS_SET(0);
-    //å‘é€ å†™ä½¿èƒ½ æŒ‡ä»¤
+    //·¢ËÍ Ğ´Ê¹ÄÜ Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_WRITE_ENABLE);
 
     W25Q128JV_CS_SET(1);
 }
 
 /****
-	* @brief	W25Q128JV ç¦æ­¢å†™	  
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief	W25Q128JV ½ûÖ¹Ğ´	  
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Write_DISABLE();
     */
 void W25Q128JV_Write_DISABLE()
 {
     W25Q128JV_CS_SET(0);
-    //å‘é€ å†™å¤±èƒ½ æŒ‡ä»¤
+    //·¢ËÍ Ğ´Ê§ÄÜ Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_WRITE_DISABLE);
 
     W25Q128JV_CS_SET(1);
 }
 
 /****
-	* @brief	åˆ¤æ–­W25Q128JVæ˜¯å¦å†™å…¥å®Œæˆ  åŠ  ç­‰å¾… WIP(BUSY) æ ‡å¿— ç½® 0	  
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief	ÅĞ¶ÏW25Q128JVÊÇ·ñĞ´ÈëÍê³É  ¼°  µÈ´ı WIP(BUSY) ±êÖ¾ ÖÃ 0	  
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_WaitForWrite();
     */
 void W25Q128JV_WaitForWrite()
 {
     uint8_t Reg_Status = 0;
-    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //å…³é—­DMA
+    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //¹Ø±ÕDMA
     W25Q128JV_CS_SET(0);
-    //å‘é€è¯» å¯„å­˜å™¨çŠ¶æ€ æŒ‡ä»¤
+    //·¢ËÍ¶Á ¼Ä´æÆ÷×´Ì¬ Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_READ_STATUS_REGISTER);
 
     do
@@ -90,21 +90,21 @@ void W25Q128JV_WaitForWrite()
 }
 
 /****
-	* @brief	æ“¦é™¤ W25Q128JV 
-	* @param   	æ— 
-	* @return   æ— 
+	* @brief	²Á³ı W25Q128JV 
+	* @param   	ÎŞ
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Chip_Erase();
     */
 void W25Q128JV_Chip_Erase()
 {
-    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //å…³é—­DMA
-    //å†™ä½¿èƒ½
+    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //¹Ø±ÕDMA
+    //Ğ´Ê¹ÄÜ
     W25Q128JV_Write_ENABLE();
     W25Q128JV_WaitForWrite();
 
     W25Q128JV_CS_SET(0);
 
-    //å‘é€ ç‰‡æ“¦é™¤ æŒ‡ä»¤
+    //·¢ËÍ Æ¬²Á³ı Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_CHIP_ERASE);
 
 	W25Q128JV_CS_SET(1);
@@ -112,238 +112,238 @@ void W25Q128JV_Chip_Erase()
 }
 
 /****
-	* @brief	æ“¦é™¤ W25Q128JV æ‰‡åŒº
-	* @param   	Addr    æ‰‡åŒºåœ°å€    4KB
-	* @return   æ— 
+	* @brief	²Á³ı W25Q128JV ÉÈÇø
+	* @param   	Addr    ÉÈÇøµØÖ·    4KB
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Sector_Erase();
     */
 void W25Q128JV_Sector_Erase(uint32_t Addr)
 {
-    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //å…³é—­DMA
-    W25Q128JV_Write_ENABLE();    //å†™ä½¿èƒ½
+    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //¹Ø±ÕDMA
+    W25Q128JV_Write_ENABLE();    //Ğ´Ê¹ÄÜ
     W25Q128JV_WaitForWrite();
-    W25Q128JV_CS_SET(0);    //ç‰‡é€‰
-    //å‘é€ æ‰‡åŒºæ“¦é™¤ æŒ‡ä»¤
+    W25Q128JV_CS_SET(0);    //Æ¬Ñ¡
+    //·¢ËÍ ÉÈÇø²Á³ı Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_SECTOR_ERASE); 
-	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//å‘é€åœ°å€ é«˜8ä½
-    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //å‘é€åœ°å€ ä¸­8ä½
-    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //å‘é€åœ°å€ ä½8ä½
+	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//·¢ËÍµØÖ· ¸ß8Î»
+    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //·¢ËÍµØÖ· ÖĞ8Î»
+    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //·¢ËÍµØÖ· µÍ8Î»
     W25Q128JV_CS_SET(1);
     W25Q128JV_WaitForWrite();   
 }
 
 /****
-	* @brief	æ“¦é™¤ W25Q128JV å—
-	* @param   	Addr    å—åœ°å€  32KB
-	* @return   æ— 
+	* @brief	²Á³ı W25Q128JV ¿é
+	* @param   	Addr    ¿éµØÖ·  32KB
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Sector_Erase();
     */
 void W25Q128JV_Block_Erase(uint32_t Addr)
 {
-    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //å…³é—­DMA
-    W25Q128JV_Write_ENABLE();    //å†™ä½¿èƒ½
+    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //¹Ø±ÕDMA
+    W25Q128JV_Write_ENABLE();    //Ğ´Ê¹ÄÜ
     W25Q128JV_WaitForWrite();
-    W25Q128JV_CS_SET(0);    //ç‰‡é€‰
-    //å‘é€ å—æ“¦é™¤ æŒ‡ä»¤
+    W25Q128JV_CS_SET(0);    //Æ¬Ñ¡
+    //·¢ËÍ ¿é²Á³ı Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_BLOCK_ERASE1);
-	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//å‘é€åœ°å€ é«˜8ä½
-    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //å‘é€åœ°å€ ä¸­8ä½
-    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //å‘é€åœ°å€ ä½8ä½
+	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//·¢ËÍµØÖ· ¸ß8Î»
+    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //·¢ËÍµØÖ· ÖĞ8Î»
+    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //·¢ËÍµØÖ· µÍ8Î»
     W25Q128JV_CS_SET(1);
     W25Q128JV_WaitForWrite();
 }
 
 /****
-	* @brief	W25Q128JV çš„ID	    0xEF4018	  
-	* @param   	æ— 
-	* @return   W25Q128JV_ID  	W25Q128JVçš„ID
+	* @brief	W25Q128JV µÄID	    0xEF4018	  
+	* @param   	ÎŞ
+	* @return   W25Q128JV_ID  	W25Q128JVµÄID
 	* Sample usage:W25Q128JV_Read_JEDEC_ID();
     */
 uint32_t W25Q128JV_Read_JEDEC_ID()
 {
     uint32_t W25Q128JV_ID = 0;
-    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //å…³é—­DMA
-    W25Q128JV_CS_SET(0);                        //ç‰‡é€‰
-    W25Q128JV_SPI_SendReceiveByte(W25Q128JV_JEDEC_ID);    //å‘é€è¯»å–IDæŒ‡ä»¤
-    W25Q128JV_ID = W25Q128JV_SPI_SendReceiveByte(DUMMY) << 16;    //å·¥å‚ID æ ‡è¯†
-    W25Q128JV_ID |= W25Q128JV_SPI_SendReceiveByte(DUMMY) << 8;    //è®¾å¤‡ID é«˜8ä½
-    W25Q128JV_ID |= W25Q128JV_SPI_SendReceiveByte(DUMMY);         //è®¾å¤‡ID ä½8ä½
-    W25Q128JV_CS_SET(1);                        //å–æ¶ˆç‰‡é€‰
+    W25Q128JV_SPIx_DMA_CMD(DISABLE);            //¹Ø±ÕDMA
+    W25Q128JV_CS_SET(0);                        //Æ¬Ñ¡
+    W25Q128JV_SPI_SendReceiveByte(W25Q128JV_JEDEC_ID);    //·¢ËÍ¶ÁÈ¡IDÖ¸Áî
+    W25Q128JV_ID = W25Q128JV_SPI_SendReceiveByte(DUMMY) << 16;    //¹¤³§ID ±êÊ¶
+    W25Q128JV_ID |= W25Q128JV_SPI_SendReceiveByte(DUMMY) << 8;    //Éè±¸ID ¸ß8Î»
+    W25Q128JV_ID |= W25Q128JV_SPI_SendReceiveByte(DUMMY);         //Éè±¸ID µÍ8Î»
+    W25Q128JV_CS_SET(1);                        //È¡ÏûÆ¬Ñ¡
     return W25Q128JV_ID;
 }
 
 /****
-	* @brief	W25Q128JV çš„ID	    0x15	  
-	* @param   	æ— 
-	* @return   W25Q128JV_ID  	W25Q128JVçš„ID
+	* @brief	W25Q128JV µÄID	    0x15	  
+	* @param   	ÎŞ
+	* @return   W25Q128JV_ID  	W25Q128JVµÄID
 	* Sample usage:W25Q128JV_Read_Device_ID();
     */
 uint8_t W25Q128JV_Read_Device_ID()
 {
 	uint8_t Device_ID;
-	W25Q128JV_SPIx_DMA_CMD(DISABLE);           //å…³é—­DMA
+	W25Q128JV_SPIx_DMA_CMD(DISABLE);           //¹Ø±ÕDMA
     W25Q128JV_CS_SET(0);   
-	W25Q128JV_SPI_SendReceiveByte(W25Q128JV_DEVICE_ID);    //å‘é€è¯»å–IDæŒ‡ä»¤
+	W25Q128JV_SPI_SendReceiveByte(W25Q128JV_DEVICE_ID);    //·¢ËÍ¶ÁÈ¡IDÖ¸Áî
 	W25Q128JV_SPI_SendReceiveByte(DUMMY);
 	W25Q128JV_SPI_SendReceiveByte(DUMMY);
 	W25Q128JV_SPI_SendReceiveByte(DUMMY);
-	Device_ID = W25Q128JV_SPI_SendReceiveByte(DUMMY);     //è®¾å¤‡ID
-	W25Q128JV_CS_SET(1);                        //å–æ¶ˆç‰‡é€‰
+	Device_ID = W25Q128JV_SPI_SendReceiveByte(DUMMY);     //Éè±¸ID
+	W25Q128JV_CS_SET(1);                        //È¡ÏûÆ¬Ñ¡
     return Device_ID;
 }
 
 /****
-	* @brief	è¯»å– W25Q128JV æ•°æ®
-	* @param   	Addr    è¯»å–çš„åœ°å€      0x000000~0x7FFFFF
-    * @param   	Data    å­˜å‚¨è¯»å–çš„æ•°æ®
-    * @param   	Num     è¯»å–æ•°æ®çš„é•¿åº¦  0~0x800000
-	* @return   æ— 
+	* @brief	¶ÁÈ¡ W25Q128JV Êı¾İ
+	* @param   	Addr    ¶ÁÈ¡µÄµØÖ·      0x000000~0x7FFFFF
+    * @param   	Data    ´æ´¢¶ÁÈ¡µÄÊı¾İ
+    * @param   	Num     ¶ÁÈ¡Êı¾İµÄ³¤¶È  0~0x800000
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Read_Data(0,buff,4096);
     */
-#ifdef W25Q128JV_USE_DMADIS        //ä¸ä½¿ç”¨DMA
+#ifdef W25Q128JV_USE_DMADIS        //²»Ê¹ÓÃDMA
 void W25Q128JV_Read_Data(uint32_t Addr,uint8_t *Data,uint32_t Num)
 {
-    W25Q128JV_CS_SET(0);               //ç‰‡é€‰
-    W25Q128JV_SPI_SendReceiveByte(W25Q128JV_READ_DATA);    //å‘é€è¯» æ•°æ® æŒ‡ä»¤
+    W25Q128JV_CS_SET(0);               //Æ¬Ñ¡
+    W25Q128JV_SPI_SendReceiveByte(W25Q128JV_READ_DATA);    //·¢ËÍ¶Á Êı¾İ Ö¸Áî
 
-	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//å‘é€åœ°å€ é«˜8ä½
-    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //å‘é€åœ°å€ ä¸­8ä½
-    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //å‘é€åœ°å€ ä½8ä½
+	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//·¢ËÍµØÖ· ¸ß8Î»
+    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //·¢ËÍµØÖ· ÖĞ8Î»
+    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //·¢ËÍµØÖ· µÍ8Î»
 
     while(Num--)
     {
-        *Data++ = W25Q128JV_SPI_SendReceiveByte(DUMMY);    //æ¥æ”¶æ•°æ®
+        *Data++ = W25Q128JV_SPI_SendReceiveByte(DUMMY);    //½ÓÊÕÊı¾İ
     }
-    W25Q128JV_CS_SET(1);                //å–æ¶ˆç‰‡é€‰
+    W25Q128JV_CS_SET(1);                //È¡ÏûÆ¬Ñ¡
 }
 
 /****
-	* @brief	W25Q128JV é¡µå†™å…¥æ•°æ®
-	* @param   	Addr    è¯»å–çš„åœ°å€
-    * @param   	Data    è¦å†™å…¥çš„æ•°æ®
-    * @param   	Num     å†™å…¥æ•°æ®çš„é•¿åº¦	1-256
-	* @return   æ— 
+	* @brief	W25Q128JV Ò³Ğ´ÈëÊı¾İ
+	* @param   	Addr    ¶ÁÈ¡µÄµØÖ·
+    * @param   	Data    ÒªĞ´ÈëµÄÊı¾İ
+    * @param   	Num     Ğ´ÈëÊı¾İµÄ³¤¶È	1-256
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Page_Program(0,buff,256);
     */
 void W25Q128JV_Page_Program(uint32_t Addr,uint8_t *Data,uint16_t Num)
 {
-    W25Q128JV_Write_ENABLE();           //å†™ä½¿èƒ½
-    W25Q128JV_WaitForWrite();           //ç­‰å¾…å†™å…¥å®Œæˆ
-    W25Q128JV_CS_SET(0);                //ç‰‡é€‰
-    W25Q128JV_SPI_SendReceiveByte(W25Q128JV_PAGE_PROGRAM);    	//å‘é€é¡µå†™å…¥æŒ‡ä»¤
+    W25Q128JV_Write_ENABLE();           //Ğ´Ê¹ÄÜ
+    W25Q128JV_WaitForWrite();           //µÈ´ıĞ´ÈëÍê³É
+    W25Q128JV_CS_SET(0);                //Æ¬Ñ¡
+    W25Q128JV_SPI_SendReceiveByte(W25Q128JV_PAGE_PROGRAM);    	//·¢ËÍÒ³Ğ´ÈëÖ¸Áî
 
-	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//å‘é€åœ°å€ é«˜8ä½
-    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //å‘é€åœ°å€ ä¸­8ä½
-    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //å‘é€åœ°å€ ä½8ä½
+	W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);		//·¢ËÍµØÖ· ¸ß8Î»
+    W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);        //·¢ËÍµØÖ· ÖĞ8Î»
+    W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);                 //·¢ËÍµØÖ· µÍ8Î»
 																
     while(Num--)
     {
-        W25Q128JV_SPI_SendReceiveByte(*Data++);            //å‘é€æ•°æ®
+        W25Q128JV_SPI_SendReceiveByte(*Data++);            //·¢ËÍÊı¾İ
     }
-    W25Q128JV_CS_SET(1);                //å–æ¶ˆç‰‡é€‰
-    W25Q128JV_WaitForWrite();           //ç­‰å¾…å†™å…¥å®Œæˆ
+    W25Q128JV_CS_SET(1);                //È¡ÏûÆ¬Ñ¡
+    W25Q128JV_WaitForWrite();           //µÈ´ıĞ´ÈëÍê³É
 }
 
-#else //ä½¿ç”¨DMA
+#else //Ê¹ÓÃDMA
 /****
-	* @brief	è¯»å– W25Q128JV æ•°æ®
-	* @param   	Addr    è¯»å–çš„åœ°å€      0x000000~0x7FFFFF
-    * @param   	Data    å­˜å‚¨è¯»å–çš„æ•°æ®
-    * @param   	Num     è¯»å–æ•°æ®çš„é•¿åº¦  0~0x800000
-	* @return   æ— 
+	* @brief	¶ÁÈ¡ W25Q128JV Êı¾İ
+	* @param   	Addr    ¶ÁÈ¡µÄµØÖ·      0x000000~0x7FFFFF
+    * @param   	Data    ´æ´¢¶ÁÈ¡µÄÊı¾İ
+    * @param   	Num     ¶ÁÈ¡Êı¾İµÄ³¤¶È  0~0x800000
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Read_Data(0,buff,4096);
     */
 void W25Q128JV_Read_Data(uint32_t Addr,uint8_t *Data,uint32_t Num)
 {
-    //å‘é€å­—èŠ‚
-    uint8_t DummyData[Num];     //å®šä¹‰ä¸€ä¸ªæ•°ç»„ç”¨äºå­˜å‚¨Dummyæ•°æ®
-    memset(DummyData,0,Num);    //å°†DummyDataæ•°ç»„å…¨éƒ¨ç½®ä¸º0
+    //·¢ËÍ×Ö½Ú
+    uint8_t DummyData[Num];     //¶¨ÒåÒ»¸öÊı×éÓÃÓÚ´æ´¢DummyÊı¾İ
+    memset(DummyData,0,Num);    //½«DummyDataÊı×éÈ«²¿ÖÃÎª0
 	
     W25Q128JV_SPIx_DMA_CMD(DISABLE);
     W25Q128JV_CS_SET(0);
-    //å‘é€è¯» æ•°æ® æŒ‡ä»¤
+    //·¢ËÍ¶Á Êı¾İ Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_READ_DATA);
 
-    //åœ°å€é«˜ä½
+    //µØÖ·¸ßÎ»
     W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);
     W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);
-    //åœ°å€ä½ä½
+    //µØÖ·µÍÎ»
     W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);
     
-    W25Q128JV_DMA_CMD(DISABLE);    //å…³é—­DMA
+    W25Q128JV_DMA_CMD(DISABLE);    //¹Ø±ÕDMA
 
-    //æ¥æ”¶æ•°æ®
-    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_RX_Stream,Num);    //è®¾ç½®DMAä¼ è¾“æ•°æ®é•¿åº¦
-    W25Q128JV_DMAx_SPI_RX_Stream->M0AR = (uint32_t)Data;        //è®¾ç½®DMAä¼ è¾“æ•°æ®åœ°å€
+    //½ÓÊÕÊı¾İ
+    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_RX_Stream,Num);    //ÉèÖÃDMA´«ÊäÊı¾İ³¤¶È
+    W25Q128JV_DMAx_SPI_RX_Stream->M0AR = (uint32_t)Data;        //ÉèÖÃDMA´«ÊäÊı¾İµØÖ·
 
-    //å‘é€æ•°æ®
-    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_TX_Stream,Num);    //è®¾ç½®DMAä¼ è¾“æ•°æ®é•¿åº¦
-    W25Q128JV_DMAx_SPI_TX_Stream->M0AR = (uint32_t)DummyData;    //è®¾ç½®DMAä¼ è¾“æ•°æ®åœ°å€
+    //·¢ËÍÊı¾İ
+    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_TX_Stream,Num);    //ÉèÖÃDMA´«ÊäÊı¾İ³¤¶È
+    W25Q128JV_DMAx_SPI_TX_Stream->M0AR = (uint32_t)DummyData;    //ÉèÖÃDMA´«ÊäÊı¾İµØÖ·
    
-    W25Q128JV_SPIx_DMA_CMD(ENABLE);      //å¼€å¯SPI DMA
-    W25Q128JV_DMA_CMD(ENABLE);           //å¼€å¯DMA
+    W25Q128JV_SPIx_DMA_CMD(ENABLE);      //¿ªÆôSPI DMA
+    W25Q128JV_DMA_CMD(ENABLE);           //¿ªÆôDMA
 
-    //ç­‰å¾…æ¥æ”¶å®Œæˆ
-    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2) == RESET);    //ç­‰å¾…DMAä¼ è¾“å®Œæˆ
-    DMA_ClearFlag(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2);    //æ¸…é™¤DMAä¼ è¾“å®Œæˆæ ‡å¿—ä½
-    //ç­‰å¾…å‘é€å®Œæˆ
-    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5) == RESET);    //ç­‰å¾…DMAä¼ è¾“å®Œæˆ
-    DMA_ClearFlag(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5);    //æ¸…é™¤DMAä¼ è¾“å®Œæˆæ ‡å¿—ä½
+    //µÈ´ı½ÓÊÕÍê³É
+    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2) == RESET);    //µÈ´ıDMA´«ÊäÍê³É
+    DMA_ClearFlag(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2);    //Çå³ıDMA´«ÊäÍê³É±êÖ¾Î»
+    //µÈ´ı·¢ËÍÍê³É
+    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5) == RESET);    //µÈ´ıDMA´«ÊäÍê³É
+    DMA_ClearFlag(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5);    //Çå³ıDMA´«ÊäÍê³É±êÖ¾Î»
     
-    W25Q128JV_CS_SET(1);            //å–æ¶ˆç‰‡é€‰
+    W25Q128JV_CS_SET(1);            //È¡ÏûÆ¬Ñ¡
 }
 
 /****
-	* @brief	W25Q128JV é¡µå†™å…¥æ•°æ®
-	* @param   	Addr    è¯»å–çš„åœ°å€
-    * @param   	Data    è¦å†™å…¥çš„æ•°æ®
-    * @param   	Num     å†™å…¥æ•°æ®çš„é•¿åº¦	1-256
-	* @return   æ— 
+	* @brief	W25Q128JV Ò³Ğ´ÈëÊı¾İ
+	* @param   	Addr    ¶ÁÈ¡µÄµØÖ·
+    * @param   	Data    ÒªĞ´ÈëµÄÊı¾İ
+    * @param   	Num     Ğ´ÈëÊı¾İµÄ³¤¶È	1-256
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Page_Program(0,buff,256);
     */
 void W25Q128JV_Page_Program(uint32_t Addr,uint8_t *Data,uint16_t Num)
 {
-    uint8_t DummyData[Num];     //å®šä¹‰ä¸€ä¸ªæ•°ç»„ç”¨äºå­˜å‚¨Dummyæ•°æ®
-    memset(DummyData,0,Num);    //å°†DummyDataæ•°ç»„å…¨éƒ¨ç½®ä¸º0
+    uint8_t DummyData[Num];     //¶¨ÒåÒ»¸öÊı×éÓÃÓÚ´æ´¢DummyÊı¾İ
+    memset(DummyData,0,Num);    //½«DummyDataÊı×éÈ«²¿ÖÃÎª0
 
-    W25Q128JV_Write_ENABLE();   //å†™ä½¿èƒ½
+    W25Q128JV_Write_ENABLE();   //Ğ´Ê¹ÄÜ
 
-    W25Q128JV_SPIx_DMA_CMD(DISABLE);    //å…³é—­SPI DMA
+    W25Q128JV_SPIx_DMA_CMD(DISABLE);    //¹Ø±ÕSPI DMA
 
-    W25Q128JV_WaitForWrite();           //ç­‰å¾…å†™å…¥å®Œæˆ
+    W25Q128JV_WaitForWrite();           //µÈ´ıĞ´ÈëÍê³É
 
     W25Q128JV_CS_SET(0);
 
-    //å‘é€ é¡µå†™å…¥ æŒ‡ä»¤
+    //·¢ËÍ Ò³Ğ´Èë Ö¸Áî
     W25Q128JV_SPI_SendReceiveByte(W25Q128JV_PAGE_PROGRAM);
 	
-	//å‘é€å—é«˜ä½åœ°å€
+	//·¢ËÍ¿é¸ßÎ»µØÖ·
     W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF0000) >> 16);
-    //å‘é€å—ä¸­ä½åœ°å€
+    //·¢ËÍ¿éÖĞÎ»µØÖ·
     W25Q128JV_SPI_SendReceiveByte((Addr & 0xFF00) >> 8);
-    //å‘é€å—ä½ä½åœ°å€
+    //·¢ËÍ¿éµÍÎ»µØÖ·
     W25Q128JV_SPI_SendReceiveByte(Addr & 0xFF);
 	
-    W25Q128JV_DMA_CMD(DISABLE);    //å…³é—­DMA
+    W25Q128JV_DMA_CMD(DISABLE);    //¹Ø±ÕDMA
 
-    //å‘é€æ•°æ®
-    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_TX_Stream,Num);    //è®¾ç½®DMAä¼ è¾“æ•°æ®é•¿åº¦
-    W25Q128JV_DMAx_SPI_TX_Stream->M0AR = (uint32_t)Data;        //è®¾ç½®DMAä¼ è¾“æ•°æ®åœ°å€
+    //·¢ËÍÊı¾İ
+    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_TX_Stream,Num);    //ÉèÖÃDMA´«ÊäÊı¾İ³¤¶È
+    W25Q128JV_DMAx_SPI_TX_Stream->M0AR = (uint32_t)Data;        //ÉèÖÃDMA´«ÊäÊı¾İµØÖ·
 
-    //æ¥æ”¶æ•°æ®
-    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_RX_Stream,Num);    //è®¾ç½®DMAä¼ è¾“æ•°æ®é•¿åº¦
-    W25Q128JV_DMAx_SPI_RX_Stream->M0AR = (uint32_t)DummyData;    //è®¾ç½®DMAä¼ è¾“æ•°æ®åœ°å€
+    //½ÓÊÕÊı¾İ
+    DMA_SetCurrDataCounter(W25Q128JV_DMAx_SPI_RX_Stream,Num);    //ÉèÖÃDMA´«ÊäÊı¾İ³¤¶È
+    W25Q128JV_DMAx_SPI_RX_Stream->M0AR = (uint32_t)DummyData;    //ÉèÖÃDMA´«ÊäÊı¾İµØÖ·
 
-    W25Q128JV_SPIx_DMA_CMD(ENABLE);            //å¼€å¯SPI DMA
-    W25Q128JV_DMA_CMD(ENABLE);                  //å¼€å¯DMA
+    W25Q128JV_SPIx_DMA_CMD(ENABLE);            //¿ªÆôSPI DMA
+    W25Q128JV_DMA_CMD(ENABLE);                  //¿ªÆôDMA
 
-    //ç­‰å¾…å‘é€å®Œæˆ
-    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5) == RESET);    //ç­‰å¾…DMAä¼ è¾“å®Œæˆ
-    DMA_ClearFlag(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5);    //æ¸…é™¤DMAä¼ è¾“å®Œæˆæ ‡å¿—ä½
+    //µÈ´ı·¢ËÍÍê³É
+    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5) == RESET);    //µÈ´ıDMA´«ÊäÍê³É
+    DMA_ClearFlag(W25Q128JV_DMAx_SPI_TX_Stream,DMA_FLAG_TCIF5);    //Çå³ıDMA´«ÊäÍê³É±êÖ¾Î»
 
-    //ç­‰å¾…æ¥æ”¶å®Œæˆ
-    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2) == RESET);    //ç­‰å¾…DMAä¼ è¾“å®Œæˆ
-    DMA_ClearFlag(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2);    //æ¸…é™¤DMAä¼ è¾“å®Œæˆæ ‡å¿—ä½
+    //µÈ´ı½ÓÊÕÍê³É
+    while(DMA_GetFlagStatus(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2) == RESET);    //µÈ´ıDMA´«ÊäÍê³É
+    DMA_ClearFlag(W25Q128JV_DMAx_SPI_RX_Stream,DMA_FLAG_TCIF2);    //Çå³ıDMA´«ÊäÍê³É±êÖ¾Î»
 
 	W25Q128JV_CS_SET(1);
     W25Q128JV_WaitForWrite();
@@ -351,27 +351,27 @@ void W25Q128JV_Page_Program(uint32_t Addr,uint8_t *Data,uint16_t Num)
 #endif //W25Q128JV_USE_DMADIS
 
 /****
-	* @brief	W25Q128JV å†™å…¥æ•°æ®
-	* @param   	Addr    è¯»å–çš„åœ°å€
-    * @param   	Data    è¦å†™å…¥çš„æ•°æ®
-    * @param   	Num     å†™å…¥æ•°æ®çš„é•¿åº¦	
-	* @return   æ— 
+	* @brief	W25Q128JV Ğ´ÈëÊı¾İ
+	* @param   	Addr    ¶ÁÈ¡µÄµØÖ·
+    * @param   	Data    ÒªĞ´ÈëµÄÊı¾İ
+    * @param   	Num     Ğ´ÈëÊı¾İµÄ³¤¶È	
+	* @return   ÎŞ
 	* Sample usage:W25Q128JV_Buff_Write(0,buff,256);
     */
 void W25Q128JV_Buff_Write(uint32_t Addr,uint8_t *Data,uint32_t Num)
 {
     uint8_t NumOfPage = 0, NumOfSingle = 0, Addr_Temp = 0, count = 0, temp = 0;
-    /*modè¿ç®—æ±‚ä½™ï¼Œè‹¥Addræ˜¯W25Q128JV_PageSizeæ•´æ•°å€ï¼Œè¿ç®—ç»“æœAddr_Tempå€¼ä¸º0*/
+    /*modÔËËãÇóÓà£¬ÈôAddrÊÇW25Q128JV_PageSizeÕûÊı±¶£¬ÔËËã½á¹ûAddr_TempÖµÎª0*/
     Addr_Temp = Addr % W25Q128JV_PageSize;
 	
-	/*å·®countä¸ªæ•°æ®å€¼ï¼Œåˆšå¥½å¯ä»¥å¯¹é½åˆ°é¡µåœ°å€*/
+	/*²îcount¸öÊı¾İÖµ£¬¸ÕºÃ¿ÉÒÔ¶ÔÆëµ½Ò³µØÖ·*/
     count = W25Q128JV_PageSize - Addr_Temp;
-	/*è®¡ç®—å‡ºè¦å†™å¤šå°‘æ•´æ•°é¡µ*/
+	/*¼ÆËã³öÒªĞ´¶àÉÙÕûÊıÒ³*/
     NumOfPage =  Num / W25Q128JV_PageSize;
-	/*modè¿ç®—æ±‚ä½™ï¼Œè®¡ç®—å‡ºå‰©ä½™ä¸æ»¡ä¸€é¡µçš„å­—èŠ‚æ•°*/
+	/*modÔËËãÇóÓà£¬¼ÆËã³öÊ£Óà²»ÂúÒ»Ò³µÄ×Ö½ÚÊı*/
     NumOfSingle = Num % W25Q128JV_PageSize;
 	
-	/* Addr_Temp=0,åˆ™WriteAddr åˆšå¥½æŒ‰é¡µå¯¹é½ aligned  */
+	/* Addr_Temp=0,ÔòWriteAddr ¸ÕºÃ°´Ò³¶ÔÆë aligned  */
     if (Addr_Temp == 0)
     {
         /* Num < W25Q128JV_PageSize */
@@ -381,61 +381,61 @@ void W25Q128JV_Buff_Write(uint32_t Addr,uint8_t *Data,uint32_t Num)
         }
         else /* Num > W25Q128JV_PageSize */
         { 
-            /*å…ˆæŠŠæ•´æ•°é¡µéƒ½å†™äº†*/
+            /*ÏÈ°ÑÕûÊıÒ³¶¼Ğ´ÁË*/
             while (NumOfPage--)
             {
                 W25Q128JV_Page_Program(Addr,Data,W25Q128JV_PageSize);
                 Addr += W25Q128JV_PageSize;
                 Data += W25Q128JV_PageSize;
             }
-            /*è‹¥æœ‰å¤šä½™çš„ä¸æ»¡ä¸€é¡µçš„æ•°æ®ï¼ŒæŠŠå®ƒå†™å®Œ*/
+            /*ÈôÓĞ¶àÓàµÄ²»ÂúÒ»Ò³µÄÊı¾İ£¬°ÑËüĞ´Íê*/
             W25Q128JV_Page_Program(Addr,Data,NumOfSingle);
         }
     }
-    /* è‹¥åœ°å€ä¸ W25Q128JV_PageSize ä¸å¯¹é½  */
+    /* ÈôµØÖ·Óë W25Q128JV_PageSize ²»¶ÔÆë  */
     else 
     {
         /* Num < W25Q128JV_PageSize */
         if (NumOfPage == 0)
         {
-            /*å½“å‰é¡µå‰©ä½™çš„countä¸ªä½ç½®æ¯”NumOfSingleå°ï¼Œä¸€é¡µå†™ä¸å®Œ*/
+            /*µ±Ç°Ò³Ê£ÓàµÄcount¸öÎ»ÖÃ±ÈNumOfSingleĞ¡£¬Ò»Ò³Ğ´²»Íê*/
             if (NumOfSingle > count) 
             {
                 temp = NumOfSingle - count;
-                 /*å…ˆå†™æ»¡å½“å‰é¡µ*/
+                 /*ÏÈĞ´Âúµ±Ç°Ò³*/
                 W25Q128JV_Page_Program(Addr,Data,count);
                         
                 Addr +=  count;
                 Data += count;
-                /*å†å†™å‰©ä½™çš„æ•°æ®*/
+                /*ÔÙĞ´Ê£ÓàµÄÊı¾İ*/
                 W25Q128JV_Page_Program(Addr,Data,temp);
             }
-            else /*å½“å‰é¡µå‰©ä½™çš„countä¸ªä½ç½®èƒ½å†™å®ŒNumOfSingleä¸ªæ•°æ®*/
+            else /*µ±Ç°Ò³Ê£ÓàµÄcount¸öÎ»ÖÃÄÜĞ´ÍêNumOfSingle¸öÊı¾İ*/
             {
                 W25Q128JV_Page_Program(Addr,Data,Num);
             }
         }
         else /* Num > W25Q128JV_PageSize */
         {
-            /*åœ°å€ä¸å¯¹é½å¤šå‡ºçš„countåˆ†å¼€å¤„ç†ï¼Œä¸åŠ å…¥è¿™ä¸ªè¿ç®—*/
+            /*µØÖ·²»¶ÔÆë¶à³öµÄcount·Ö¿ª´¦Àí£¬²»¼ÓÈëÕâ¸öÔËËã*/
             Num -= count;
             NumOfPage = Num / W25Q128JV_PageSize;
             NumOfSingle = Num % W25Q128JV_PageSize;
                     
-            /* å…ˆå†™å®Œcountä¸ªæ•°æ®ï¼Œä¸ºçš„æ˜¯è®©ä¸‹ä¸€æ¬¡è¦å†™çš„åœ°å€å¯¹é½ */
+            /* ÏÈĞ´Íêcount¸öÊı¾İ£¬ÎªµÄÊÇÈÃÏÂÒ»´ÎÒªĞ´µÄµØÖ·¶ÔÆë */
             W25Q128JV_Page_Program(Addr,Data,count);
                     
-            /* æ¥ä¸‹æ¥å°±é‡å¤åœ°å€å¯¹é½çš„æƒ…å†µ */
+            /* ½ÓÏÂÀ´¾ÍÖØ¸´µØÖ·¶ÔÆëµÄÇé¿ö */
             Addr +=  count;
             Data += count;
-                /*æŠŠæ•´æ•°é¡µéƒ½å†™äº†*/
+                /*°ÑÕûÊıÒ³¶¼Ğ´ÁË*/
             while (NumOfPage--)
             {
                 W25Q128JV_Page_Program(Addr,Data,W25Q128JV_PageSize);
                 Addr += W25Q128JV_PageSize;
                 Data += W25Q128JV_PageSize;
             }
-            /*è‹¥æœ‰å¤šä½™çš„ä¸æ»¡ä¸€é¡µçš„æ•°æ®ï¼ŒæŠŠå®ƒå†™å®Œ*/
+            /*ÈôÓĞ¶àÓàµÄ²»ÂúÒ»Ò³µÄÊı¾İ£¬°ÑËüĞ´Íê*/
             if (NumOfSingle != 0)
             {
                 W25Q128JV_Page_Program(Addr,Data,NumOfSingle);

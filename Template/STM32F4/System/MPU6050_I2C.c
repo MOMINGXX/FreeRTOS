@@ -1,9 +1,9 @@
 #include "MPU6050_I2C.h"
 
 /****
-	* @brief	MPU6050_I2C SCL å¼•è„šå†™å…¥ä½æ•°æ® 0 / 1 			  
+	* @brief	MPU6050_I2C SCL Òı½ÅĞ´ÈëÎ»Êı¾İ 0 / 1 			  
 	* @param   	BitValue    0 / 1
-	* @return   æ—   	
+	* @return   ÎŞ  	
 	* Sample usage:MPU6050_SCL_Write(1);
     */
 static void MPU6050_SCL_Write(uint8_t BitValue)
@@ -13,9 +13,9 @@ static void MPU6050_SCL_Write(uint8_t BitValue)
 }
 
 /****
-	* @brief	MPU6050_I2C SDA å¼•è„šå†™å…¥ä½æ•°æ® 0 / 1 			  
+	* @brief	MPU6050_I2C SDA Òı½ÅĞ´ÈëÎ»Êı¾İ 0 / 1 			  
 	* @param   	BitValue    0 / 1
-	* @return   æ—   	
+	* @return   ÎŞ  	
 	* Sample usage:MPU6050_SDA_Write(1);
     */
 static void MPU6050_SDA_Write(uint8_t BitValue)
@@ -25,9 +25,9 @@ static void MPU6050_SDA_Write(uint8_t BitValue)
 }
 
 /****
-	* @brief	MPU6050_I2C SDA è¯»å–å¼•è„šçŠ¶æ€ 			  
-	* @param   	æ— 
-	* @return   BitValue    è¯»å–çš„çŠ¶æ€  	
+	* @brief	MPU6050_I2C SDA ¶ÁÈ¡Òı½Å×´Ì¬ 			  
+	* @param   	ÎŞ
+	* @return   BitValue    ¶ÁÈ¡µÄ×´Ì¬  	
 	* Sample usage:MPU6050_SDA_Read();
     */
 static uint8_t MPU6050_SDA_Read(void)
@@ -39,21 +39,21 @@ static uint8_t MPU6050_SDA_Read(void)
 }
 
 /****
-	* @brief	MPU6050_I2C å¼•è„šé…ç½®   			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	MPU6050_I2C Òı½ÅÅäÖÃ   			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage:MPU6050_I2C_Config();
     */
 void MPU6050_I2C_Config(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-    MPU6050_I2C_GPIO_APBxCLKCMD(MPU6050_I2C_SCL_GPIO_CLK, ENABLE);  //  ä½¿èƒ½I2Cæ—¶é’Ÿ
+    MPU6050_I2C_GPIO_APBxCLKCMD(MPU6050_I2C_SCL_GPIO_CLK, ENABLE);  //  Ê¹ÄÜI2CÊ±ÖÓ
     MPU6050_I2C_GPIO_APBxCLKCMD(MPU6050_I2C_SDA_GPIO_CLK, ENABLE);
     
     GPIO_InitStructure.GPIO_Pin = MPU6050_SCL_GPIO_PIN | MPU6050_SDA_GPIO_PIN;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;       // è¾“å‡ºæ¨¡å¼
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;      // æ¨æŒ½è¾“å‡º
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;        // ä¸Šæ‹‰
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;       // Êä³öÄ£Ê½
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;      // ÍÆÍìÊä³ö
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;        // ÉÏÀ­
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 
     GPIO_Init(MPU6050_SCL_GPIO_PORT, &GPIO_InitStructure);
@@ -64,37 +64,37 @@ void MPU6050_I2C_Config(void)
 }
 
 /****
-	* @brief	MPU6050_I2C  å¼€å§‹ä¿¡å·			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	MPU6050_I2C  ¿ªÊ¼ĞÅºÅ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage:MPU6050_I2C_Start();
     */
 void MPU6050_I2C_Start(void)
 {
     MPU6050_SDA_Write(1);
     MPU6050_SCL_Write(1);          
-    MPU6050_SDA_Write(0);   // äº§ç”Ÿä¸€ä¸ªæ—¶é’Ÿ
-    MPU6050_SCL_Write(0);   // é‡Šæ”¾æ€»çº¿
+    MPU6050_SDA_Write(0);   // ²úÉúÒ»¸öÊ±ÖÓ
+    MPU6050_SCL_Write(0);   // ÊÍ·Å×ÜÏß
 }
 
 /****
-	* @brief	MPU6050_I2C  åœæ­¢ä¿¡å·			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	MPU6050_I2C  Í£Ö¹ĞÅºÅ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage:MPU6050_I2C_Stop();
     */
 void MPU6050_I2C_Stop(void)
 {
     MPU6050_SCL_Write(0);
     MPU6050_SDA_Write(0);   
-    MPU6050_SCL_Write(1);    // SCL é«˜ç”µå¹³æ—¶ SDA è¿›è¡Œè·³å˜    
+    MPU6050_SCL_Write(1);    // SCL ¸ßµçÆ½Ê± SDA ½øĞĞÌø±ä    
     MPU6050_SDA_Write(1);   
 }
 
 /****
-	* @brief	MPU6050_I2C å‘é€æ•°æ®    			  
-	* @param   	Byte    å‘é€çš„æ•°æ® 
-	* @return   æ—   	
+	* @brief	MPU6050_I2C ·¢ËÍÊı¾İ    			  
+	* @param   	Byte    ·¢ËÍµÄÊı¾İ 
+	* @return   ÎŞ  	
 	* Sample usage:MPU6050_I2C_SendByte(0x01);
     */
 void MPU6050_I2C_SendByte(uint8_t Byte)
@@ -109,9 +109,9 @@ void MPU6050_I2C_SendByte(uint8_t Byte)
 }
 
 /****
-	* @brief	MPU6050_I2C æ¥æ”¶æ•°æ®    			  
-	* @param   	æ— 
-	* @return   Byte    æ¥æ”¶çš„æ•°æ®  	
+	* @brief	MPU6050_I2C ½ÓÊÕÊı¾İ    			  
+	* @param   	ÎŞ
+	* @return   Byte    ½ÓÊÕµÄÊı¾İ  	
 	* Sample usage:MPU6050_I2C_ReceiveByte();
     */
 uint8_t MPU6050_I2C_ReceiveByte()
@@ -131,15 +131,15 @@ uint8_t MPU6050_I2C_ReceiveByte()
 }
 
 /****
-	* @brief	MPU6050_I2C ç­‰å¾…åº”ç­”   			  
-	* @param   	æ— 
-	* @return   1 - æ— åº”ç­”  
-                0 - åº”ç­”	
+	* @brief	MPU6050_I2C µÈ´ıÓ¦´ğ   			  
+	* @param   	ÎŞ
+	* @return   1 - ÎŞÓ¦´ğ  
+                0 - Ó¦´ğ	
 	* Sample usage:MPU6050_I2C_WaitAck();
     */
 uint8_t  MPU6050_I2C_WaitAck()
 {
-    uint8_t ucErrorTime = 0;    //è¶…æ—¶æ—¶é—´
+    uint8_t ucErrorTime = 0;    //³¬Ê±Ê±¼ä
     MPU6050_SDA_Write(1);
     MPU6050_SCL_Write(1);
     while(MPU6050_SDA_Read())
@@ -156,9 +156,9 @@ uint8_t  MPU6050_I2C_WaitAck()
 }
 
 /****
-	* @brief	MPU6050_I2C å‘é€åº”ç­”   			  
-	* @param   	Ack     å‘é€çš„åº”ç­”   0 / 1
-	* @return   æ—  	
+	* @brief	MPU6050_I2C ·¢ËÍÓ¦´ğ   			  
+	* @param   	Ack     ·¢ËÍµÄÓ¦´ğ   0 / 1
+	* @return   ÎŞ 	
 	* Sample usage:MPU6050_I2C_SendAck(1);
     */
 void MPU6050_I2C_SendAck(uint8_t Ack)
@@ -171,9 +171,9 @@ void MPU6050_I2C_SendAck(uint8_t Ack)
 }
 
 /****
-	* @brief	MPU6050_I2C æ¥æ”¶åº”ç­”   			  
-	* @param   	æ— 
-	* @return   Ack 	æ¥æ”¶çš„åº”ç­”  0 / 1
+	* @brief	MPU6050_I2C ½ÓÊÕÓ¦´ğ   			  
+	* @param   	ÎŞ
+	* @return   Ack 	½ÓÊÕµÄÓ¦´ğ  0 / 1
 	* Sample usage:MPU6050_I2C_SendAck(1);
     */
 uint8_t MPU6050_I2C_ReceiveAck()

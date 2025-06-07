@@ -3,6 +3,29 @@
         "freertos.h": "c",
         "freertos_user.h": "c",
         "led.h": "c",
-        "key.h": "c"
-    }
+        "key.h": "c",
+        "mpu6050.h": "c",
+        "nrf24l01.h": "c",
+        "rouker.h": "c",
+        "lcd.h": "c",
+        "lcd_init.h": "c",
+        "lcd_font.h": "c",
+        "w25q128jv.h": "c",
+        "lcd_spi.h": "c",
+        "mpu6050_i2c.h": "c",
+        "nrf24l01_spi.h": "c",
+        "usart.h": "c",
+        "timerx.h": "c",
+        "w25q128jv_spi.h": "c",
+        "delay.h": "c",
+        "event_groups.h": "c",
+        "semphr.h": "c",
+        "stm32f4xx.h": "c",
+        "task.h": "c",
+        "queue.h": "c",
+        "stm32f4xx_it.h": "c",
+        "cstddef": "c",
+        "limits": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

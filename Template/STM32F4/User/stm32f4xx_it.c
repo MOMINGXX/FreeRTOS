@@ -39,6 +39,20 @@ extern void TimingDelay_Decrement(void);
 /******************************************************************************/
 /*            Cortex-M4 Processor Exceptions Handlers                         */
 /******************************************************************************/
+/****
+	* @brief    定时器 中断函数		
+	* @param   	无
+	* @return   无    	
+    */
+void TIMEx_IRQHandler()
+{
+    if(SET == TIM_GetITStatus(TIM2,TIM_IT_Update))
+    {
+      TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+      KEY_Tick();
+      LED_Tick();
+    }
+}
 
 /**
   * @brief  This function handles NMI exception.

@@ -14,7 +14,7 @@ extern uint8_t Usart_RxHEX[];
 extern char Usart_RxCharacter[];
 extern uint8_t Usart_RxFlag;
 
-//‰∏≤Âè£
+//¥Æø⁄
 #define SPECIFIE_USARTx                     USART1
 #define SPECIFIE_USART_CLK                  RCC_APB2Periph_USART1
 #define SPECIFIE_USART_APBxCLKCMD           RCC_APB2PeriphClockCmd
@@ -27,7 +27,7 @@ extern uint8_t Usart_RxFlag;
 #define SPECIFIE_USART_PreemptionPriority   5
 #define SPECIFIE_USART_SubPriority          0
 
-//‰∏≤Âè£ÂºïËÑö
+//¥Æø⁄“˝Ω≈
 #define SPECIFIE_USART_GPIO_CLK             RCC_AHB1Periph_GPIOA
 #define SPECIFIE_USART_GPIO_APBxCLKCMD      RCC_AHB1PeriphClockCmd
 
@@ -35,7 +35,7 @@ extern uint8_t Usart_RxFlag;
 #define SPECIFIE_USART_TX_GPIO_PIN          GPIO_Pin_9
 #define SPECIFIE_USART_RX_GPIO_PIN          GPIO_Pin_10
 
-//‰∏≠Êñ≠
+//÷–∂œ
 #define SPECIFIE_USART_IRQChannel           USART1_IRQn
 #define SPECIFIE_USART_IRQHNADLER           USART1_IRQHandler
 

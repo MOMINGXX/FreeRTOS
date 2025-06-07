@@ -1,11 +1,11 @@
 #include "NRF24L01_SPI.h"
 
-#define NRF24L01_SPIx_WateTime      ((uint16_t)0x0500)          //ç­‰å¾…æ—¶é—´
+#define NRF24L01_SPIx_WateTime      ((uint16_t)0x0500)          //µÈ´ıÊ±¼ä
 
 /****
-	* @brief	NRF24L01 SPI GPIO é…ç½®			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	NRF24L01 SPI GPIO ÅäÖÃ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage: NRF24L01_SPI_GPIO_Config();
     */
 static void NRF24L01_SPI_GPIO_Config()
@@ -13,23 +13,23 @@ static void NRF24L01_SPI_GPIO_Config()
     GPIO_InitTypeDef GPIO_InitStructer;
     NRF24L01_GPIO_AHBxClockCMD(NRF24L01_GPIOx_CLK,ENABLE);
 
-    //SPI å¼•è„š å¤ç”¨
+    //SPI Òı½Å ¸´ÓÃ
     GPIO_PinAFConfig(NRF24L01_GPIOx_PORT,NRF24L01_SCK_PINSOURCE,GPIO_AF_SPI1);
     GPIO_PinAFConfig(NRF24L01_GPIOx_PORT,NRF24L01_MISO_PINSOURCE,GPIO_AF_SPI1);
     GPIO_PinAFConfig(NRF24L01_GPIOx_PORT,NRF24L01_MOSI_PINSOURCE,GPIO_AF_SPI1);
 
-    GPIO_InitStructer.GPIO_Mode = GPIO_Mode_AF;         //å¤ç”¨æ¨¡å¼
-    GPIO_InitStructer.GPIO_OType = GPIO_OType_PP;       //æ¨æŒ½è¾“å‡º
+    GPIO_InitStructer.GPIO_Mode = GPIO_Mode_AF;         //¸´ÓÃÄ£Ê½
+    GPIO_InitStructer.GPIO_OType = GPIO_OType_PP;       //ÍÆÍìÊä³ö
     GPIO_InitStructer.GPIO_Pin = NRF24L01_MISO_GPIO_PIN | NRF24L01_MOSI_GPIO_PIN | NRF24L01_SCK_GPIO_PIN;
-    GPIO_InitStructer.GPIO_PuPd = GPIO_PuPd_UP;     	//ä¸Šæ‹‰
+    GPIO_InitStructer.GPIO_PuPd = GPIO_PuPd_UP;     	//ÉÏÀ­
     GPIO_InitStructer.GPIO_Speed = GPIO_Speed_100MHz;   
     GPIO_Init(NRF24L01_GPIOx_PORT,&GPIO_InitStructer);
 }
 
 /****
-	* @brief	NRF24L01 SPI é…ç½®			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	NRF24L01 SPI ÅäÖÃ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage: NRF24L01_SPI_Config();
     */
 static void NRF24L01_SPI_Config()
@@ -37,24 +37,24 @@ static void NRF24L01_SPI_Config()
     SPI_InitTypeDef SPI_InitStructer;
     NRF24L01_SPIx_APBxClockCMD(NRF24L01_SPIx_CLK,ENABLE);
 
-    SPI_InitStructer.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;      //æ³¢ç‰¹ç‡é¢„åˆ†é¢‘ 16åˆ†é¢‘
-    SPI_InitStructer.SPI_CPHA = SPI_CPHA_1Edge;                             //æ—¶é’Ÿç›¸ä½  ç¬¬äºŒä¸ªè¾¹æ²¿é‡‡æ ·
-    SPI_InitStructer.SPI_CPOL = SPI_CPOL_Low;                              //æ—¶é’Ÿææ€§  ç©ºé—²æ—¶SCLKä¸ºé«˜ç”µå¹³
-    SPI_InitStructer.SPI_CRCPolynomial = 7;                                 //CRCæ ¡éªŒå¤šé¡¹å¼
-    SPI_InitStructer.SPI_DataSize = SPI_DataSize_8b;                        //æ•°æ®å¤§å° 8ä½
-    SPI_InitStructer.SPI_Direction = SPI_Direction_2Lines_FullDuplex;       //å…¨åŒå·¥
-    SPI_InitStructer.SPI_FirstBit = SPI_FirstBit_MSB;                       //æ•°æ®ä¼ è¾“ä»é«˜ä½å¼€å§‹
-    SPI_InitStructer.SPI_Mode = SPI_Mode_Master;                            //ä¸»æ¨¡å¼
-    SPI_InitStructer.SPI_NSS = SPI_NSS_Soft;                                //NSSä¿¡å·ç”±è½¯ä»¶æ§åˆ¶
+    SPI_InitStructer.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;      //²¨ÌØÂÊÔ¤·ÖÆµ 16·ÖÆµ
+    SPI_InitStructer.SPI_CPHA = SPI_CPHA_1Edge;                             //Ê±ÖÓÏàÎ»  µÚ¶ş¸ö±ßÑØ²ÉÑù
+    SPI_InitStructer.SPI_CPOL = SPI_CPOL_Low;                              //Ê±ÖÓ¼«ĞÔ  ¿ÕÏĞÊ±SCLKÎª¸ßµçÆ½
+    SPI_InitStructer.SPI_CRCPolynomial = 7;                                 //CRCĞ£Ñé¶àÏîÊ½
+    SPI_InitStructer.SPI_DataSize = SPI_DataSize_8b;                        //Êı¾İ´óĞ¡ 8Î»
+    SPI_InitStructer.SPI_Direction = SPI_Direction_2Lines_FullDuplex;       //È«Ë«¹¤
+    SPI_InitStructer.SPI_FirstBit = SPI_FirstBit_MSB;                       //Êı¾İ´«Êä´Ó¸ßÎ»¿ªÊ¼
+    SPI_InitStructer.SPI_Mode = SPI_Mode_Master;                            //Ö÷Ä£Ê½
+    SPI_InitStructer.SPI_NSS = SPI_NSS_Soft;                                //NSSĞÅºÅÓÉÈí¼ş¿ØÖÆ
     SPI_Init(NRF24L01_SPIx,&SPI_InitStructer);
 
-    SPI_Cmd(NRF24L01_SPIx,ENABLE);                   //ä½¿èƒ½SPI
+    SPI_Cmd(NRF24L01_SPIx,ENABLE);                   //Ê¹ÄÜSPI
 }
 
 /****
-	* @brief	NRF24L01 SPI åˆå§‹åŒ–			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	NRF24L01 SPI ³õÊ¼»¯			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage: NRF24L01_SPI_Init();
     */
 void NRF24L01_SPI_Init()
@@ -64,29 +64,29 @@ void NRF24L01_SPI_Init()
 }
 
 /****
-	* @brief	SPI å‘é€ æ¥æ”¶ ä¸€ä¸ªå­—èŠ‚æ•°æ®   		  
-	* @param	SendByte	å‘é€çš„æ•°æ®
-	* @return   ReceiveByte æ¥æ”¶çš„æ•°æ® 	
+	* @brief	SPI ·¢ËÍ ½ÓÊÕ Ò»¸ö×Ö½ÚÊı¾İ   		  
+	* @param	SendByte	·¢ËÍµÄÊı¾İ
+	* @return   ReceiveByte ½ÓÊÕµÄÊı¾İ 	
 	* Sample usage:SOFT_SPI_Config();
     */
 uint8_t NRF24L01_Send_RecieveByte(uint8_t SendByte)
 {
     uint16_t TimeOut = 0;
-    while(SPI_I2S_GetFlagStatus(NRF24L01_SPIx,SPI_I2S_FLAG_TXE) == RESET)     //ç­‰å¾…å‘é€ç¼“å†²åŒºä¸ºç©º
+    while(SPI_I2S_GetFlagStatus(NRF24L01_SPIx,SPI_I2S_FLAG_TXE) == RESET)     //µÈ´ı·¢ËÍ»º³åÇøÎª¿Õ
     {
         if(++TimeOut >= NRF24L01_SPIx_WateTime)
         {
-            break;      //è¶…æ—¶é€€å‡º
+            break;      //³¬Ê±ÍË³ö
         }
     }
     TimeOut = 0;
-    SPI_I2S_SendData(NRF24L01_SPIx,SendByte);                                //å‘é€ä¸€ä¸ªå­—èŠ‚
-    while(SPI_I2S_GetFlagStatus(NRF24L01_SPIx,SPI_I2S_FLAG_RXNE) == RESET)   //ç­‰å¾…æ¥æ”¶ç¼“å†²åŒºéç©º
+    SPI_I2S_SendData(NRF24L01_SPIx,SendByte);                                //·¢ËÍÒ»¸ö×Ö½Ú
+    while(SPI_I2S_GetFlagStatus(NRF24L01_SPIx,SPI_I2S_FLAG_RXNE) == RESET)   //µÈ´ı½ÓÊÕ»º³åÇø·Ç¿Õ
     {
         if(++TimeOut >= NRF24L01_SPIx_WateTime)     
         {
-            break;      //è¶…æ—¶é€€å‡º
+            break;      //³¬Ê±ÍË³ö
         }
     }
-    return SPI_I2S_ReceiveData(NRF24L01_SPIx);                         		//è¯»å–ä¸€ä¸ªå­—èŠ‚
+    return SPI_I2S_ReceiveData(NRF24L01_SPIx);                         		//¶ÁÈ¡Ò»¸ö×Ö½Ú
 }

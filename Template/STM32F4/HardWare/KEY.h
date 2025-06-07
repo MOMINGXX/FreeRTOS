@@ -2,18 +2,18 @@
 #define _KEY_H_
 
 #include "stm32f4xx.h"                  // Device header
-#include "NRF24L01.h"
-#include "LED.h"
-#include "TIMERx.h"
 #include "USART.h"
-//#include "Delay.h"
+#include "TIMERx.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 
-#define KEY_USE_TIMER	1				//ä½¿ç”¨å®šæ—¶å™¨æ¶ˆæŠ–  å¯ç›´æ¥è¯»å–é•¿æŒ‰çŠ¶æ€
+#define KEY_USE_TIMER				//Ê¹ÓÃ¶¨Ê±Æ÷Ïû¶¶  ¿ÉÖ±½Ó¶ÁÈ¡³¤°´×´Ì¬    ·Ç×èÈûÊ½
+//#define KEY_USE_QUEUE				//Ê¹ÓÃ¶ÓÁĞ
+#define KEY_USE_NOTIFY			//Ê¹ÓÃÍ¨Öª 
 
 extern QueueHandle_t Key_QueueHandle;
+extern TaskHandle_t Key_NotifyHandle;
 
 // MP3 Play
 typedef enum 
@@ -53,9 +53,8 @@ typedef enum
 #define KEY_B_GPIO_PIN           	GPIO_Pin_2 		//GPIOC
 
 void KEY_Init();
-void KEY_LOOP();
+void KEY_Tick();
 uint8_t Key_GetNumber();
-void Key_Send(uint8_t KetNum);
-void vKey_Task(void *pvParameters);
+void vKey_ReadTask(void *pvParameters);
 
 #endif

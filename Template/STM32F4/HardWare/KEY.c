@@ -1,20 +1,21 @@
 #include "KEY.h"
 
 uint8_t KeyNumber;
-QueueHandle_t Key_QueueHandle;    // å®é™…å®šä¹‰å¹¶åˆå§‹åŒ–ä¸ºNULL
+QueueHandle_t Key_QueueHandle;    // °´¼ü¶ÓÁĞ¾ä±ú 
+TaskHandle_t Key_NotifyHandle;   // °´¼üÍ¨ÖªÈÎÎñ¾ä±ú 
 
 /****
-	* @brief    KEY å¼•è„š é…ç½®	
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    KEY Òı½Å ÅäÖÃ	
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:KEY_Config(); 
     */
 static void KEY_Config()
 {
     GPIO_InitTypeDef GPIO_InitStruct;
-    //å¼€å¯GPIOæ—¶é’Ÿ
+    //¿ªÆôGPIOÊ±ÖÓ
 	KEY_APBx_ClockCMD(KEYx_CLK,ENABLE);
-    //å‚æ•°é…ç½®                                                                                   
+    //²ÎÊıÅäÖÃ                                                                                   
     GPIO_InitStruct.GPIO_Pin =  ROUKER_RIGHT_GPIO_PIN | KEY_X_GPIO_PIN;                    
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
@@ -28,177 +29,178 @@ static void KEY_Config()
     GPIO_InitStruct.GPIO_Pin = KEY_DOWN_GPIO_PIN | KEY_RIGHT_GPIO_PIN |KEY_X_GPIO_PIN |
 							   KEY_Y_GPIO_PIN | KEY_A_GPIO_PIN | KEY_B_GPIO_PIN;                                                     
     GPIO_Init(KEY1_GPIO_PORT,&GPIO_InitStruct);                                                    
-}                                                                                                  
+}         
 
 /****
-	* @brief    KEY åˆå§‹åŒ–		  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    KEY ³õÊ¼»¯	
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:KEY_Init(); 
     */
 void KEY_Init()
 {
-    TIMEx_Init();
+	//TIMEx_Init();
     KEY_Config();
-	Key_QueueHandle = xQueueCreate(1,sizeof(uint8_t));		//åˆ›å»ºæŒ‰é”®é˜Ÿåˆ—
-	if(Key_QueueHandle == NULL)							    //åˆ›å»ºå¤±è´¥
+#ifdef KEY_USE_QUEUE
+	Key_QueueHandle = xQueueCreate(1,sizeof(uint8_t));		//´´½¨°´¼ü¶ÓÁĞ
+	if(Key_QueueHandle == NULL)							    //´´½¨Ê§°Ü
 	{
 		printf("Key_QueueHandle Create Fail!\r\n");          
 	}
-}
+#endif
+}                                                                                         
 
 #ifdef KEY_USE_TIMER
 /****
-	* @brief    è¿”å›æŒ‰é”®å·			  
-	* @param   	æ— 
-	* @return   Temp   æŒ‰é”®å· 	
+	* @brief    ·µ»Ø°´¼üºÅ			  
+	* @param   	ÎŞ
+	* @return   Temp   °´¼üºÅ 	
 	* Sample usage:Key_GetNumber(); 
     */
 uint8_t Key_GetNumber()
 {
     uint8_t Temp = 0;
-    Temp = KeyNumber;
-    KeyNumber = 0;
-    return Temp;
+    if(KeyNumber)
+    {
+        Temp = KeyNumber;
+        KeyNumber = 0;
+        return Temp;
+    }
+    return 0;
 }
 
 /****
-	* @brief    è¯»å–æŒ‰é”®çŠ¶æ€			    
-	* @param   	æ— 
-	* @return   Number  è¿”å›æŒ‰é”®çŠ¶æ€    	  	
+	* @brief    ¶ÁÈ¡°´¼ü×´Ì¬			    
+	* @param   	ÎŞ
+	* @return   Number  ·µ»Ø°´¼ü×´Ì¬    	  	
 	* Sample usage:KEY_ReadNumber(); 
     */
 static uint8_t KEY_ReadNumber()
 {
-    uint8_t Number = 0;
-    if(GPIO_ReadInputDataBit(KEY1x_GPIO_PORT,KEY_FRONTL_GPIO_PIN) == RESET) {Number = 1;}
-    else if(GPIO_ReadInputDataBit(KEY1x_GPIO_PORT,ROUKER_RIGHT_GPIO_PIN) == RESET) {Number = 2;}
-    else if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,KEY_ON_GPIO_PIN) == RESET) {Number = 3;}
-    else if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,KEY_LEFT_GPIO_PIN) == RESET) {Number = 4;}
-    else if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,KEY_FRONTR_GPIO_PIN) == RESET) {Number = 5;}
-    else if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,ROUKER_LEFT_GPIO_PIN) == RESET) {Number = 6;}
-    else if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_DOWN_GPIO_PIN) == RESET) {Number = 7;}
-    else if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_RIGHT_GPIO_PIN) == RESET) {Number = 8;}
-    else if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_X_GPIO_PIN) == RESET) {Number = 9;}
-    else if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_Y_GPIO_PIN) == RESET) {Number = 10;}
-    else if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_A_GPIO_PIN) == RESET) {Number = 11;}
-    else if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_B_GPIO_PIN) == RESET) {Number = 12;}
-	return Number;                                
+    if(GPIO_ReadInputDataBit(KEY1x_GPIO_PORT,KEY_FRONTL_GPIO_PIN) == RESET)    {return 1;}
+    if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,KEY_FRONTR_GPIO_PIN) == RESET)    {return 2;}
+    if(GPIO_ReadInputDataBit(KEY1x_GPIO_PORT,ROUKER_RIGHT_GPIO_PIN) == RESET)  {return 3;}
+    if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,ROUKER_LEFT_GPIO_PIN) == RESET)   {return 4;}
+    if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,KEY_ON_GPIO_PIN) == RESET)        {return 5;}
+    if(GPIO_ReadInputDataBit(KEY2x_GPIO_PORT,KEY_LEFT_GPIO_PIN) == RESET)      {return 6;}
+    if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_DOWN_GPIO_PIN) == RESET)       {return 7;}
+    if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_RIGHT_GPIO_PIN) == RESET)      {return 8;}
+    if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_Y_GPIO_PIN) == RESET)          {return 9;}
+    if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_X_GPIO_PIN) == RESET)          {return 10;}
+    if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_A_GPIO_PIN) == RESET)          {return 11;}
+    if(GPIO_ReadInputDataBit(KEY1_GPIO_PORT,KEY_B_GPIO_PIN) == RESET)          {return 12;}
+	return 0;                                
 }
 
 /****
-	* @brief    å®šæ—¶å™¨æ‰«æ			  
-	* @param   	æ— 
-	* @return   æ—    	
-	* Sample usage:KEY_LOOP(); 
+	* @brief    ¶¨Ê±Æ÷É¨Ãè	·Ç×èÈûÊ½		  
+	* @param   	ÎŞ
+	* @return   ÎŞ   	
+	* Sample usage:KEY_Tick(); 
     */
-void KEY_LOOP()
+void KEY_Tick()
 {
-    uint8_t NowState,LastState;
-    LastState = NowState;
-    NowState = KEY_ReadNumber();
-    if(LastState == 0  && NowState == 1)		{KeyNumber = 1;}
-	else if(LastState == 0 && NowState == 2 )	{KeyNumber = 2;}
-	else if(LastState == 0 && NowState == 3 )	{KeyNumber = 3;}
-	else if(LastState == 0 && NowState == 4 )	{KeyNumber = 4;}
-	else if(LastState == 0 && NowState == 5 )	{KeyNumber = 5;}
-	else if(LastState == 0 && NowState == 6 )	{KeyNumber = 6;}
-	else if(LastState == 0 && NowState == 7 )	{KeyNumber = 7;}
-	else if(LastState == 0 && NowState == 8 )	{KeyNumber = 8;}
-    else if(LastState == 0 && NowState == 9 )	{KeyNumber = 9;}
-    else if(LastState == 0 && NowState == 10)	{KeyNumber = 10;}
-    else if(LastState == 0 && NowState == 11)	{KeyNumber = 11;}
-	else if(LastState == 0 && NowState == 12)	{KeyNumber = 12;}
-}
-
-/****
-	* @brief    å®šæ—¶å™¨ ä¸­æ–­å‡½æ•°		
-	* @param   	æ— 
-	* @return   æ—     	
-    */
-void TIMEx_IRQHandler()
-{
-    static uint8_t Count = 0;
-    if(SET == TIM_GetITStatus(TIM2,TIM_IT_Update))
+    static uint8_t Count;                                      //¶¨Òå¼ÆÊı±äÁ¿
+    static uint8_t CurrentState,PrevState;                         //¶¨Òåµ±Ç°×´Ì¬ºÍÉÏÒ»¸ö×´Ì¬±äÁ¿
+    Count ++;                                               //¼ÆÊı±äÁ¿×Ô¼Ó
+    if(Count >= 20)                                         //ÑÓÊ±20ms
     {
-        Count ++;
-        if(Count >= 10)
+        Count = 0;                                          //¼ÆÊı±äÁ¿ÇåÁã       
+        PrevState = CurrentState;                           //½«µ±Ç°×´Ì¬¸³Öµ¸øÉÏÒ»¸ö×´Ì¬±äÁ¿
+        CurrentState = KEY_ReadNumber();                    //¶ÁÈ¡°´¼ü×´Ì¬
+        if(CurrentState == 0  && PrevState != 0)		    //Èç¹ûµ±Ç°×´Ì¬Îª0 ,ÉÏÒ»¸ö×´Ì¬²»Îª0£¬ËµÃ÷°´¼ü°´ÏÂ
         {
-			Count = 0;
-            KEY_LOOP();
-		}
-        TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+            KeyNumber = PrevState;                       	//½«°´¼üºÅ¸³Öµ¸øÈ«¾Ö±äÁ¿
+        }
     }
 }
 
 #else 
 /****
-	* @brief    è¯»å–æŒ‰é”®çŠ¶æ€	å»¶æ—¶å‡½æ•°æ¶ˆæŠ–	
-	* @param   	æ— 
-	* @return   Number  è¿”å›æŒ‰é”®çŠ¶æ€    	
+	* @brief    ¶ÁÈ¡°´¼ü×´Ì¬	ÑÓÊ±º¯ÊıÏû¶¶	×èÈûÊ½
+	* @param   	ÎŞ
+	* @return   Number  ·µ»Ø°´¼ü×´Ì¬    	
 	* Sample usage:KEY_ReadNumber(); 
     */
 static uint8_t Key_ReadNumber(GPIO_TypeDef *GPIOx,uint16_t GPIO_Pin)
 {
-    uint8_t Number = 0;
     if(RESET == GPIO_ReadInputDataBit(GPIOx,GPIO_Pin))
     {
         vTaskDelay(10);
         if(RESET == GPIO_ReadInputDataBit(GPIOx,GPIO_Pin))
         {
 			vTaskDelay(10);
-            Number = 1;
+            return 1;
         }while(!GPIO_ReadInputDataBit(GPIOx,GPIO_Pin));
     }
-    return Number;
+    return 0;
 }
 
 /****
-	* @brief    è¯»å–æŒ‰é”®			 	  
-	* @param   	æ— 
-	* @return   Number  è¿”å›æŒ‰é”®    	
+	* @brief    ¶ÁÈ¡°´¼ü			 	  ×èÈûÊ½
+	* @param   	ÎŞ
+	* @return   Number  ·µ»Ø°´¼ü    	
 	* Sample usage:Key_GetNumber(); 
     */
 uint8_t Key_GetNumber()
 {
     uint8_t Number = 0;
-    if(Key_ReadNumber(KEY1x_GPIO_PORT,KEY_FRONTL_GPIO_PIN) == SET) {Number = 1;}  
-    else if(Key_ReadNumber(KEY1x_GPIO_PORT,ROUKER_RIGHT_GPIO_PIN) == SET) {Number = 2;}
-    else if(Key_ReadNumber(KEY2x_GPIO_PORT,KEY_ON_GPIO_PIN) == SET) {Number = 3;}
-    else if(Key_ReadNumber(KEY2x_GPIO_PORT,KEY_LEFT_GPIO_PIN) == SET) {Number = 4;}
-    else if(Key_ReadNumber(KEY2x_GPIO_PORT,KEY_FRONTR_GPIO_PIN) == SET) {Number = 5;}
-    else if(Key_ReadNumber(KEY2x_GPIO_PORT,ROUKER_LEFT_GPIO_PIN) == SET) {Number = 6;}
-    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_DOWN_GPIO_PIN) == SET) {Number = 7;}
-    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_RIGHT_GPIO_PIN) == SET) {Number = 8;}
-    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_X_GPIO_PIN) == SET) {Number = 9;}
-    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_Y_GPIO_PIN) == SET) {Number = 10;}
-    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_A_GPIO_PIN) == SET) {Number = 11;}
-    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_B_GPIO_PIN) == SET) {Number = 12;}
+    if(Key_ReadNumber(KEY1x_GPIO_PORT,KEY_FRONTL_GPIO_PIN)) 		{Number = 1;}  
+    else if(Key_ReadNumber(KEY2x_GPIO_PORT,KEY_FRONTR_GPIO_PIN))  	{Number = 2;}
+    else if(Key_ReadNumber(KEY2x_GPIO_PORT,ROUKER_LEFT_GPIO_PIN))  	{Number = 3;}
+    else if(Key_ReadNumber(KEY1x_GPIO_PORT,ROUKER_RIGHT_GPIO_PIN)) 	{Number = 4;}
+    else if(Key_ReadNumber(KEY2x_GPIO_PORT,KEY_ON_GPIO_PIN))	    {Number = 5;}
+    else if(Key_ReadNumber(KEY2x_GPIO_PORT,KEY_LEFT_GPIO_PIN))  	{Number = 6;}
+    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_DOWN_GPIO_PIN)) 		{Number = 7;}
+    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_RIGHT_GPIO_PIN)) 		{Number = 8;}
+    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_Y_GPIO_PIN)) 			{Number = 9;}
+    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_X_GPIO_PIN)) 			{Number = 10;}
+    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_A_GPIO_PIN)) 			{Number = 11;}
+    else if(Key_ReadNumber(KEY1_GPIO_PORT,KEY_B_GPIO_PIN)) 			{Number = 12;}
 	return Number; 
 }
-
 #endif
 
-
+#ifdef  KEY_USE_QUEUE
 /****
-	* @brief   FreeRTOSè¯»å–æŒ‰é”®	å…¥é˜Ÿä»»åŠ¡		
-	* @param   æ— 
-	* @return  æ—   
+	* @brief   FreeRTOS¶ÁÈ¡°´¼ü	Èë¶ÓÈÎÎñ		
+	* @param   ÎŞ
+	* @return  ÎŞ  
     */
-void vKey_Task(void *pvParameters)
+void vKey_ReadTask(void *pvParameters)
 {
 	uint8_t KEY_NUMBER = 0;
     while(1)
     {
-		KEY_NUMBER = Key_GetNumber();		//è·å–æŒ‰é”®
+		KEY_NUMBER = Key_GetNumber();		//»ñÈ¡°´¼ü
 		if(KEY_NUMBER != 0)
 		{
-			xQueueSend(Key_QueueHandle,&KEY_NUMBER,portMAX_DELAY);		//è·å–é”®å€¼å­˜å…¥é˜Ÿåˆ—
+			xQueueSend(Key_QueueHandle,&KEY_NUMBER,portMAX_DELAY);		//»ñÈ¡¼üÖµ´æÈë¶ÓÁĞ
 		}
-		vTaskDelay(pdMS_TO_TICKS(5));
+		vTaskDelay(pdMS_TO_TICKS(10)); 
 	}
 }
 
+#elif defined KEY_USE_NOTIFY
+/****
+	* @brief   FreeRTOS¶ÁÈ¡°´¼ü	ÈÎÎñÍ¨Öª·½Ê½    ¶ÓÁĞ		
+	* @param   ÎŞ
+	* @return  ÎŞ  
+    */
+void vKey_ReadTask(void *pvParameters)
+{
+	uint8_t KEY_NUMBER = 0;
+    while(1)
+    {
+		KEY_NUMBER = Key_GetNumber();		//»ñÈ¡¼üÖµ
+		if(KEY_NUMBER != 0)
+		{
+			xTaskNotify(Key_NotifyHandle,KEY_NUMBER,eSetValueWithOverwrite);		//»ñÈ¡¼üÖµ´æÈë
+		}
+		vTaskDelay(pdMS_TO_TICKS(10));
+    }
+}
+#endif
 
 //void Key_Send(uint8_t KetNum)
 //{
@@ -231,3 +233,4 @@ void vKey_Task(void *pvParameters)
 //  		printf("ROCKER Send failed !\n");	 
 //	}
 //}
+

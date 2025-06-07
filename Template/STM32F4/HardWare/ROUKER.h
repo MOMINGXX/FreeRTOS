@@ -4,7 +4,7 @@
 #include "stm32f4xx.h"                  // Device header
 #include "USART.h"
 
-//ADC 鏁扮洰
+//ADC 数目
 #define ADC_CHANNELS 5
 
 #define Y_ADC_MAX 4095
@@ -26,10 +26,10 @@ typedef struct
 #define ROCKER_ADCx_GPIO_CLK 					RCC_AHB1Periph_GPIOA
 #define ROCKER_ADCx_GPIO_AHBxClockCMD			RCC_AHB1PeriphClockCmd
 #define ROCKER_ADCx_GPIO_PORT 					GPIOA
-#define ROCKER_ADCL1_Pin 						GPIO_Pin_0			//宸﹀彸
-#define ROCKER_ADCL2_Pin 						GPIO_Pin_1			//鍓嶅悗
-#define ROCKER_ADCR1_Pin 						GPIO_Pin_2			//鍓嶅悗
-#define ROCKER_ADCR2_Pin 						GPIO_Pin_3			//宸﹀彸
+#define ROCKER_ADCL1_Pin 						GPIO_Pin_0			//左右
+#define ROCKER_ADCL2_Pin 						GPIO_Pin_1			//前后
+#define ROCKER_ADCR1_Pin 						GPIO_Pin_2			//前后
+#define ROCKER_ADCR2_Pin 						GPIO_Pin_3			//左右
 
 //Electircity GPIO
 #define Electricity_ADCx_GPIO_CLK 				RCC_AHB1Periph_GPIOB

@@ -1,28 +1,28 @@
 #include "NRF24L01.h"
 
 /****
-	* @brief	NRF24L01 SPI GPIO é…ç½®			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	NRF24L01 SPI GPIO ÅäÖÃ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage: NRF24L01_GPIO_Config();
     */
 static void NRF24L01_GPIO_Config()
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-    NRF24L01_GPIO_APBxClockCMD(NRF24L01_GPIO_CLK, ENABLE);      //GPIO æ—¶é’Ÿä½¿èƒ½
+    NRF24L01_GPIO_APBxClockCMD(NRF24L01_GPIO_CLK, ENABLE);      //GPIO Ê±ÖÓÊ¹ÄÜ
 
     GPIO_InitStructure.GPIO_Pin = NRF24L01_CE_GPIO_PIN | NRF24L01_CS_GPIO_PIN | NRF24L01_IRQ_GPIO_PIN;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;               //GPIO æ¨¡å¼ä¸ºè¾“å‡º
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;              //GPIO è¾“å‡ºæ¨¡å¼ä¸ºæ¨æŒ½è¾“å‡º      
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;             	//GPIO ä¸Šæ‹‰
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;               //GPIO Ä£Ê½ÎªÊä³ö
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;              //GPIO Êä³öÄ£Ê½ÎªÍÆÍìÊä³ö      
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;             	//GPIO ÉÏÀ­
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(NRF24L01_GPIO_PORT, &GPIO_InitStructure);
 }
 
 /****
-	* @brief	NRF24L01 åˆå§‹åŒ–			  
-	* @param   	æ— 
-	* @return   æ—   	
+	* @brief	NRF24L01 ³õÊ¼»¯			  
+	* @param   	ÎŞ
+	* @return   ÎŞ  	
 	* Sample usage: NRF24L01_Init();
     */
 void NRF24L01_Init()
@@ -32,77 +32,77 @@ void NRF24L01_Init()
 }
 
 /****
-	* @brief    NRF24L01 å‘ç‰¹å®šçš„å¯„å­˜å™¨å†™å…¥æ•°æ® 	  
-	* @param   	Reg: NRF24L01 çš„å‘½ä»¤ + å¯„å­˜å™¨åœ°å€
-	* @param    Data: å‘å¯„å­˜å™¨å†™å…¥çš„æ•°æ® 
-    * @return   Statusï¼šå¯„å­˜å™¨çš„çŠ¶æ€
+	* @brief    NRF24L01 ÏòÌØ¶¨µÄ¼Ä´æÆ÷Ğ´ÈëÊı¾İ 	  
+	* @param   	Reg: NRF24L01 µÄÃüÁî + ¼Ä´æÆ÷µØÖ·
+	* @param    Data: Ïò¼Ä´æÆ÷Ğ´ÈëµÄÊı¾İ 
+    * @return   Status£º¼Ä´æÆ÷µÄ×´Ì¬
 	* Sample usage:NRF24L01_WriteReg(NOP,NOP);
     */
 static uint8_t NRF24L01_WriteReg(uint8_t Reg,uint8_t Data)
 {
     uint8_t Status;
-    NRF24L01_CS_LOW();          //ç‰‡é€‰
-    Status = NRF24L01_Send_RecieveByte(Reg);    //å‘é€å¯„å­˜å™¨åœ°å€
-    NRF24L01_Send_RecieveByte(Data);            //å†™å…¥æ•°æ®
-    NRF24L01_CS_HIGH();         //å–æ¶ˆç‰‡é€‰
+    NRF24L01_CS_LOW();          //Æ¬Ñ¡
+    Status = NRF24L01_Send_RecieveByte(Reg);    //·¢ËÍ¼Ä´æÆ÷µØÖ·
+    NRF24L01_Send_RecieveByte(Data);            //Ğ´ÈëÊı¾İ
+    NRF24L01_CS_HIGH();         //È¡ÏûÆ¬Ñ¡
     return Status;
 }
 
 /****
-	* @brief    NRF24L01 å‘ç‰¹å®šçš„å¯„å­˜å™¨å†™å…¥å¤šä¸ªæ•°æ® 	  
-	* @param   	Reg: NRF24L01 çš„å‘½ä»¤ + å¯„å­˜å™¨åœ°å€
-	* @param    Buff: ç”¨äºå­˜å‚¨è¦å†™å…¥å¯„å­˜å™¨æ•°æ®çš„æ•°ç»„
-    * @param    Len: Buffçš„æ•°æ®é•¿åº¦
-    * @return   Statusï¼šå¯„å­˜å™¨çš„çŠ¶æ€
+	* @brief    NRF24L01 ÏòÌØ¶¨µÄ¼Ä´æÆ÷Ğ´Èë¶à¸öÊı¾İ 	  
+	* @param   	Reg: NRF24L01 µÄÃüÁî + ¼Ä´æÆ÷µØÖ·
+	* @param    Buff: ÓÃÓÚ´æ´¢ÒªĞ´Èë¼Ä´æÆ÷Êı¾İµÄÊı×é
+    * @param    Len: BuffµÄÊı¾İ³¤¶È
+    * @return   Status£º¼Ä´æÆ÷µÄ×´Ì¬
 	* Sample usage:NRF24L01_WriteBuff(NOP,NOP,6);
     */
 static uint8_t NRF24L01_WriteBuff(uint8_t Reg,uint8_t *Buff,uint8_t Len)
 {
     uint8_t Status;
-    NRF24L01_CS_LOW();          //ç‰‡é€‰
-    Status = NRF24L01_Send_RecieveByte(Reg);    //å‘é€å¯„å­˜å™¨åœ°å€
+    NRF24L01_CS_LOW();          //Æ¬Ñ¡
+    Status = NRF24L01_Send_RecieveByte(Reg);    //·¢ËÍ¼Ä´æÆ÷µØÖ·
     for(int i = 0;i < Len;i++)
     {
-        NRF24L01_Send_RecieveByte(*Buff++);    //å†™å…¥æ•°æ®
+        NRF24L01_Send_RecieveByte(*Buff++);    //Ğ´ÈëÊı¾İ
     }
-    NRF24L01_CS_HIGH();         //å–æ¶ˆç‰‡é€‰
+    NRF24L01_CS_HIGH();         //È¡ÏûÆ¬Ñ¡
     return Status;
 }
 
 /****
-	* @brief    NRF24L01 å‘ç‰¹å®šçš„å¯„å­˜å™¨è¯»æ•°æ® 	  
-	* @param   	Reg: NRF24L01 çš„å‘½ä»¤ + å¯„å­˜å™¨åœ°å€
-    * @return   Dataï¼šå¯„å­˜å™¨ä¸­çš„æ•°æ®
+	* @brief    NRF24L01 ÏòÌØ¶¨µÄ¼Ä´æÆ÷¶ÁÊı¾İ 	  
+	* @param   	Reg: NRF24L01 µÄÃüÁî + ¼Ä´æÆ÷µØÖ·
+    * @return   Data£º¼Ä´æÆ÷ÖĞµÄÊı¾İ
 	* Sample usage:NRF24L01_ReadReg(NOP);
     */
 static uint8_t NRF24L01_ReadReg(uint8_t reg)
 {
     uint8_t Data;
-    NRF24L01_CS_LOW();          //ç‰‡é€‰
-    NRF24L01_Send_RecieveByte(reg);    //å‘é€å¯„å­˜å™¨åœ°å€
-    Data = NRF24L01_Send_RecieveByte(NOP);    //è¯»å–æ•°æ®
-    NRF24L01_CS_HIGH();         //å–æ¶ˆç‰‡é€‰
+    NRF24L01_CS_LOW();          //Æ¬Ñ¡
+    NRF24L01_Send_RecieveByte(reg);    //·¢ËÍ¼Ä´æÆ÷µØÖ·
+    Data = NRF24L01_Send_RecieveByte(NOP);    //¶ÁÈ¡Êı¾İ
+    NRF24L01_CS_HIGH();         //È¡ÏûÆ¬Ñ¡
     return Data;
 }
 
 /****
-	* @brief    NRF24L01 å‘ç‰¹å®šçš„å¯„å­˜å™¨è¯»å¤šä¸ªæ•°æ® 	  
-	* @param   	Reg: NRF24L01 çš„å‘½ä»¤ + å¯„å­˜å™¨åœ°å€
-    * @return   Buffï¼šç”¨äºå­˜å‚¨è¢«è¯»å‡ºå¯„å­˜å™¨æ•°æ®çš„æ•°ç»„
-    * @param    Len: Buffçš„æ•°æ®é•¿åº¦
-    * @return   Statusï¼šå¯„å­˜å™¨çš„çŠ¶æ€
+	* @brief    NRF24L01 ÏòÌØ¶¨µÄ¼Ä´æÆ÷¶Á¶à¸öÊı¾İ 	  
+	* @param   	Reg: NRF24L01 µÄÃüÁî + ¼Ä´æÆ÷µØÖ·
+    * @return   Buff£ºÓÃÓÚ´æ´¢±»¶Á³ö¼Ä´æÆ÷Êı¾İµÄÊı×é
+    * @param    Len: BuffµÄÊı¾İ³¤¶È
+    * @return   Status£º¼Ä´æÆ÷µÄ×´Ì¬
 	* Sample usage:NRF24L01_ReadBuff(Reg,Buff,6);
     */
 static uint8_t NRF24L01_ReadBuff(uint8_t Reg,uint8_t *Buff,uint8_t Len)
 {
     uint8_t Status;
-    NRF24L01_CS_LOW();          //ç‰‡é€‰
-    Status = NRF24L01_Send_RecieveByte(Reg);    //å‘é€å¯„å­˜å™¨åœ°å€
+    NRF24L01_CS_LOW();          //Æ¬Ñ¡
+    Status = NRF24L01_Send_RecieveByte(Reg);    //·¢ËÍ¼Ä´æÆ÷µØÖ·
     for(int i = 0;i < Len;i++)
     {
-        *Buff++ = NRF24L01_Send_RecieveByte(NOP);    //è¯»å–æ•°æ®
+        *Buff++ = NRF24L01_Send_RecieveByte(NOP);    //¶ÁÈ¡Êı¾İ
     }
-    NRF24L01_CS_HIGH();         //å–æ¶ˆç‰‡é€‰
+    NRF24L01_CS_HIGH();         //È¡ÏûÆ¬Ñ¡
     return Status;
 }
 
@@ -117,10 +117,10 @@ void NRF24L01_TX_Mode()
 }
 
 /****
-	* @brief    æ£€æµ‹NRF24L01æ˜¯å¦å­˜åœ¨  
-	* @param   	æ— 
-    * @return   SUCCESS   æˆåŠŸ
-    *           ERROR     å¤±è´¥
+	* @brief    ¼ì²âNRF24L01ÊÇ·ñ´æÔÚ  
+	* @param   	ÎŞ
+    * @return   SUCCESS   ³É¹¦
+    *           ERROR     Ê§°Ü
 	* Sample usage:NRF24L01_Check();
     */
 uint8_t NRF24L01_Check()
@@ -129,13 +129,13 @@ uint8_t NRF24L01_Check()
 	uint8_t Rx_Buff[5] = { 0 };
 	uint8_t i; 
 	 
-	//å†™å…¥5ä¸ªå­—èŠ‚çš„åœ°å€
+	//Ğ´Èë5¸ö×Ö½ÚµÄµØÖ·
 	NRF24L01_WriteBuff(NRF24L01_W_REGISTER + NRF24L01_TX_ADDR,Tx_Buff,5);
 
-	//è¯»å‡ºå†™å…¥çš„åœ°å€ 
+	//¶Á³öĞ´ÈëµÄµØÖ· 
 	NRF24L01_ReadBuff(NRF24L01_TX_ADDR,Rx_Buff,5); 
 	 
-	//æ¯”è¾ƒ             
+	//±È½Ï             
 	for(i = 0; i < 5; i++)
 	{
 		if(Tx_Buff[i] != Rx_Buff[i])
@@ -143,9 +143,9 @@ uint8_t NRF24L01_Check()
 	} 
 	       
 	if(i != 5)
-		return ERROR ;        //MCUä¸NRF24L01è¿æ¥å¤±è´¥
+		return ERROR ;        //MCUÓëNRF24L01Á¬½ÓÊ§°Ü
 	else
-		return SUCCESS ;      //MCUä¸NRF24L01æ­£å¸¸è¿æ¥
+		return SUCCESS ;      //MCUÓëNRF24L01Õı³£Á¬½Ó
 }
 
 uint8_t NRF24L01_TxPacket(uint8_t *TxBuff)

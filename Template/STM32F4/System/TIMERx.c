@@ -1,102 +1,102 @@
 #include "TIMERx.h"
 
 /****
-	* @brief    å®šæ—¶å™¨2ä¸­æ–­ é…ç½®			  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    ¶¨Ê±Æ÷2ÖĞ¶Ï ÅäÖÃ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:TIMEx_NVIC_Config(); 
     */
 static void TIMEx_NVIC_Config()
 {
     NVIC_InitTypeDef NVIC_InitStruct;
-    //å‚æ•°é…ç½®
-    NVIC_InitStruct.NVIC_IRQChannel = TIMEx_IRQChannel;      //ä¸­æ–­é€šé“
-    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;             //ä¸­æ–­é€šé“ä½¿èƒ½
-    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = TIME_x_PreemptionPriority;   //æŠ¢å ä¼˜å…ˆçº§
-    NVIC_InitStruct.NVIC_IRQChannelSubPriority = TIME_x_SubPriority;          //å­ä¼˜å…ˆçº§
+    //²ÎÊıÅäÖÃ
+    NVIC_InitStruct.NVIC_IRQChannel = TIMEx_IRQChannel;      //ÖĞ¶ÏÍ¨µÀ
+    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;             //ÖĞ¶ÏÍ¨µÀÊ¹ÄÜ
+    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = TIME_x_PreemptionPriority;   //ÇÀÕ¼ÓÅÏÈ¼¶
+    NVIC_InitStruct.NVIC_IRQChannelSubPriority = TIME_x_SubPriority;          //×ÓÓÅÏÈ¼¶
     NVIC_Init(&NVIC_InitStruct);
 }
 
 /****
-	* @brief    å®šæ—¶å™¨2ä¸­æ–­ é…ç½®			  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    ¶¨Ê±Æ÷2ÖĞ¶Ï ÅäÖÃ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:TIMEx_NVIC_Config(); 
     */
 static void TIME3x_NVIC_Config()
 {
     NVIC_InitTypeDef NVIC_InitStruct;
-    //å‚æ•°é…ç½®
-    NVIC_InitStruct.NVIC_IRQChannel = TIME3x_IRQChannel;      //ä¸­æ–­é€šé“
-    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;             //ä¸­æ–­é€šé“ä½¿èƒ½
-    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = TIME3_x_PreemptionPriority;   //æŠ¢å ä¼˜å…ˆçº§
-    NVIC_InitStruct.NVIC_IRQChannelSubPriority = TIME3_x_SubPriority;          		//å­ä¼˜å…ˆçº§
+    //²ÎÊıÅäÖÃ
+    NVIC_InitStruct.NVIC_IRQChannel = TIME3x_IRQChannel;      //ÖĞ¶ÏÍ¨µÀ
+    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;             //ÖĞ¶ÏÍ¨µÀÊ¹ÄÜ
+    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = TIME3_x_PreemptionPriority;   //ÇÀÕ¼ÓÅÏÈ¼¶
+    NVIC_InitStruct.NVIC_IRQChannelSubPriority = TIME3_x_SubPriority;          		//×ÓÓÅÏÈ¼¶
     NVIC_Init(&NVIC_InitStruct);
 }
 
 /****
-	* @brief    å®šæ—¶å™¨2 é…ç½®			  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    ¶¨Ê±Æ÷2 ÅäÖÃ		10ms	  
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:TIMEx_Config(); 
     */
 static void TIMEx_Config()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
-    //å¼€å¯å®šæ—¶å™¨æ—¶é’Ÿ
+    //¿ªÆô¶¨Ê±Æ÷Ê±ÖÓ
     TIMEx_APBxClockCmd(TIMEx_CLK,ENABLE);
-    //é€‰æ‹©ä¸ºå†…éƒ¨æ—¶é’Ÿï¼ˆé»˜è®¤å†…éƒ¨æ—¶é’Ÿï¼‰
+    //Ñ¡ÔñÎªÄÚ²¿Ê±ÖÓ£¨Ä¬ÈÏÄÚ²¿Ê±ÖÓ£©
     TIM_InternalClockConfig(TIME_x);
-    //å‚æ•°é…ç½®
-    TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;        //æ—¶é’Ÿåˆ†é¢‘ 1åˆ†é¢‘
-    TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;    //è®¡æ•°æ¨¡å¼     å‘ä¸Šè®¡æ•°
-    TIM_TimeBaseInitStruct.TIM_Period = 1000 - 1;                   //ARR   è‡ªåŠ¨é‡è£…
-    TIM_TimeBaseInitStruct.TIM_Prescaler = 450 - 1;                 //PSC   é¢„åˆ†é¢‘
-    TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 0;               //é‡å¤è®¡æ•°å™¨
+    //²ÎÊıÅäÖÃ
+    TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;        //Ê±ÖÓ·ÖÆµ 1·ÖÆµ
+    TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;    //¼ÆÊıÄ£Ê½     ÏòÉÏ¼ÆÊı
+    TIM_TimeBaseInitStruct.TIM_Period = 1000 - 1;                   //ARR   ×Ô¶¯ÖØ×°
+    TIM_TimeBaseInitStruct.TIM_Prescaler = 90 - 1;                  //PSC   Ô¤·ÖÆµ
+    TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 0;               //ÖØ¸´¼ÆÊıÆ÷
     TIM_TimeBaseInit(TIME_x,&TIM_TimeBaseInitStruct);
 
     TIM_ClearFlag(TIME_x,TIM_IT_Update);
 
-    TIM_ITConfig(TIME_x,TIM_IT_Update,ENABLE);      //å®šæ—¶å™¨ä½¿èƒ½æ›´æ–°ä¸­æ–­
+    TIM_ITConfig(TIME_x,TIM_IT_Update,ENABLE);      //¶¨Ê±Æ÷Ê¹ÄÜ¸üĞÂÖĞ¶Ï
 
-    //ä½¿èƒ½å®šæ—¶å™¨
+    //Ê¹ÄÜ¶¨Ê±Æ÷
     TIM_Cmd(TIME_x,ENABLE); 
 }
 
 /****
-	* @brief    å®šæ—¶å™¨3 é…ç½®			  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    ¶¨Ê±Æ÷3 ÅäÖÃ			  
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:TIMEx_Config(); 
     */
 static void TIME3x_Config()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
-    //å¼€å¯å®šæ—¶å™¨æ—¶é’Ÿ
+    //¿ªÆô¶¨Ê±Æ÷Ê±ÖÓ
     TIMEx_APBxClockCmd(TIME3x_CLK,ENABLE);
-    //é€‰æ‹©ä¸ºå†…éƒ¨æ—¶é’Ÿï¼ˆé»˜è®¤å†…éƒ¨æ—¶é’Ÿï¼‰
+    //Ñ¡ÔñÎªÄÚ²¿Ê±ÖÓ£¨Ä¬ÈÏÄÚ²¿Ê±ÖÓ£©
     TIM_InternalClockConfig(TIME3_x);
-    //å‚æ•°é…ç½®
-    TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;        //æ—¶é’Ÿåˆ†é¢‘ 1åˆ†é¢‘
-    TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;    //è®¡æ•°æ¨¡å¼     å‘ä¸Šè®¡æ•°
-    TIM_TimeBaseInitStruct.TIM_Period = 10000 - 1;                   //ARR   è‡ªåŠ¨é‡è£…
-    TIM_TimeBaseInitStruct.TIM_Prescaler = 9000 - 1;                 //PSC   é¢„åˆ†é¢‘
-    TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 0;               //é‡å¤è®¡æ•°å™¨
+    //²ÎÊıÅäÖÃ
+    TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;        //Ê±ÖÓ·ÖÆµ 1·ÖÆµ
+    TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;    //¼ÆÊıÄ£Ê½     ÏòÉÏ¼ÆÊı
+    TIM_TimeBaseInitStruct.TIM_Period = 100 - 1;                   //ARR   ×Ô¶¯ÖØ×°
+    TIM_TimeBaseInitStruct.TIM_Prescaler = 90 - 1;                 //PSC   Ô¤·ÖÆµ
+    TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 0;               //ÖØ¸´¼ÆÊıÆ÷
     TIM_TimeBaseInit(TIME3_x,&TIM_TimeBaseInitStruct);
 
     TIM_ClearFlag(TIME3_x,TIM_IT_Update);
 
-    TIM_ITConfig(TIME3_x,TIM_IT_Update,ENABLE);      //å®šæ—¶å™¨ä½¿èƒ½æ›´æ–°ä¸­æ–­
+    TIM_ITConfig(TIME3_x,TIM_IT_Update,ENABLE);      //¶¨Ê±Æ÷Ê¹ÄÜ¸üĞÂÖĞ¶Ï
 
-    //ä½¿èƒ½å®šæ—¶å™¨
+    //Ê¹ÄÜ¶¨Ê±Æ÷
     TIM_Cmd(TIME3_x,ENABLE); 
 }
 
 
 /****
-	* @brief    å®šæ—¶å™¨2 åˆå§‹åŒ–		  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    ¶¨Ê±Æ÷2 ³õÊ¼»¯		  
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:TIMEx_Init(); 
     */
 void TIMEx_Init()
@@ -106,9 +106,9 @@ void TIMEx_Init()
 }
 
 /****
-	* @brief    å®šæ—¶å™¨3 åˆå§‹åŒ–		  
-	* @param   	æ— 
-	* @return   æ—     	
+	* @brief    ¶¨Ê±Æ÷3 ³õÊ¼»¯		  
+	* @param   	ÎŞ
+	* @return   ÎŞ    	
 	* Sample usage:TIMEx_Init(); 
     */
 void TIME3x_Init()
@@ -117,12 +117,4 @@ void TIME3x_Init()
     TIME3x_NVIC_Config();
 }
 
-void TIME3x_IRQHandler()
-{
-    if(SET == TIM_GetITStatus(TIME3_x,TIM_IT_Update))
-    {
-		TIM_ClearITPendingBit(TIME3_x,TIM_IT_Update);
-		LED_RIGHT_TOGGLE;
-    }
-}
 	
