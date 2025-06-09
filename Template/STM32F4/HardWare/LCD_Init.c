@@ -1,5 +1,7 @@
 #include "LCD_Init.h"
 
+uint8_t Compare = 0;
+
 void LCD_GPIO_Init(void)
 {
 	GPIO_InitTypeDef  GPIO_InitStruct;
@@ -18,6 +20,26 @@ void LCD_GPIO_Init(void)
 	
  	GPIO_SetBits(LCD_GPIO_PORT, LCD_RES_GPIO_PIN | LCD_CS_GPIO_PIN | LCD_BLK_GPIO_PIN);
 	GPIO_SetBits(LCD_DC_GPIO_PORT, LCD_DC_GPIO_PIN);
+}
+
+void LCD_SetBrightness(uint8_t brightness)
+{
+	Compare = brightness;	
+}
+
+void LCD_SetPWM()
+{
+	static uint8_t Count = 0;
+	Count++;
+	Count %= 100;
+	if(Count < Compare)
+	{
+		LCD_BLK_Set();
+	}
+	else
+	{
+		LCD_BLK_Clr();
+	}
 }
 
 /******************************************************************************

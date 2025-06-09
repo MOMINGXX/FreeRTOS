@@ -35,7 +35,7 @@ static void TIME3x_NVIC_Config()
 }
 
 /****
-	* @brief    定时器2 配置		10ms	  
+	* @brief    定时器2 配置		1ms	  
 	* @param   	无
 	* @return   无    	
 	* Sample usage:TIMEx_Config(); 

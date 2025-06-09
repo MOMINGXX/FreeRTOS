@@ -40,7 +40,7 @@ extern void TimingDelay_Decrement(void);
 /*            Cortex-M4 Processor Exceptions Handlers                         */
 /******************************************************************************/
 /****
-	* @brief    定时器 中断函数		
+	* @brief    定时器2 中断函数		
 	* @param   	无
 	* @return   无    	
     */
@@ -49,8 +49,18 @@ void TIMEx_IRQHandler()
     if(SET == TIM_GetITStatus(TIM2,TIM_IT_Update))
     {
       TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+      Key_StateTick();
       KEY_Tick();
       LED_Tick();
+    }
+}
+
+void TIME3x_IRQHandler()
+{
+    if(SET == TIM_GetITStatus(TIME3_x,TIM_IT_Update))
+    {
+        LCD_SetPWM();
+        TIM_ClearITPendingBit(TIME3_x,TIM_IT_Update);
     }
 }
 

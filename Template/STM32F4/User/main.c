@@ -13,9 +13,12 @@
 #include "LCD.h"
 #include "timers.h"
 #include "TIMERx.h"
+#include "semphr.h"
 
 TaskHandle_t Task1_Handler;
 TaskHandle_t SystemCreatTask_Handler;
+
+QueueHandle_t Key_SemaphoreHandle ;
 
 uint32_t Key_Number = 0;
 uint8_t Mode[4];
@@ -42,6 +45,7 @@ void dynamic_display_stack_info(char *text)
 
 void Task1(void *pvParameters)
 {	
+	uint16_t Num1 = 0,Num2 = 0;
     while(1)
     {
 		if (Key_Number)
@@ -70,6 +74,12 @@ void Task1(void *pvParameters)
 				Mode[3] %= 6;
 				LED_SetMode(3,Mode[3]);
 			}
+			else if (Key_Number == 5)
+			{
+				int i;
+				i++;
+				LCD_ShowIntNum(150,184,i,3,BLACK,WHITE,24);
+			}
 			LCD_ShowString(20,64,"Key_Number = ",BLACK,WHITE,24,0);
 			LCD_ShowIntNum(180,64,Key_Number,2,BLACK,WHITE,24);
 			Key_Number = 0;
@@ -82,6 +92,28 @@ void Task1(void *pvParameters)
 		LCD_ShowIntNum(150,136,Mode[2],2,BLACK,WHITE,24);
 		LCD_ShowString(20,160,"LED4_Mode = ",BLACK,WHITE,24,0);
 		LCD_ShowIntNum(150,160,Mode[3],2,BLACK,WHITE,24);
+
+		if(Key_Check(KEY_FRONTL,KEY_SINGLE) || Key_Check(KEY_ROUKER_RIGHT,KEY_REPEAT))
+		{
+			Num1++;
+		}
+		if(Key_Check(KEY_FRONTR,KEY_DOUBLE))
+		{
+			Num1+=100;
+		}
+		if(Key_Check(KEY_ROUKER_RIGHT,KEY_LONG))
+		{
+			Num1 = 0;
+		}
+		if(Key_Check(KEY_B,KEY_LONG))
+		{
+			Num2 = 5;
+		}
+		LCD_ShowString(20,208,"Num1 = ",BLACK,WHITE,24,0);
+		LCD_ShowIntNum(150,208,Num1,5,BLACK,WHITE,24);
+		LCD_ShowString(20,232,"Num2 = ",BLACK,WHITE,24,0);
+		LCD_ShowIntNum(150,232,Num2,5,BLACK,WHITE,24);
+		printf("Key_Number = %d\r\n",Key_Number);
 	}	
 }
 
@@ -91,13 +123,6 @@ void Task2(void *pvParameters)
     {
 		//xQueueReceive(Key_QueueHandle,&Key_Number,portMAX_DELAY);
 		xTaskNotifyWait(0,0xffffffff,&Key_Number,portMAX_DELAY);
-		/*if(Key_Number)
-		{	
-			LCD_ShowString(20,64,"Key_Number = ",BLACK,WHITE,24,0);
-			LCD_ShowIntNum(180,64,Key_Number,2,BLACK,WHITE,24);
-			printf("Key_Number = %d\r\n",Key_Number);
-			Key_Number = 0;
-		}*/
 		vTaskDelay(pdMS_TO_TICKS(10));
 	}	
 }
@@ -126,17 +151,16 @@ int main()
 	LED_Init();
 	KEY_Init();
 	LCD_Init();
-//	TIME3x_Init();
+	TIME3x_Init();
 	
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);		//中断优先级组4
-
+	LCD_SetBrightness(5);
 	LCD_Fill(0,0,LCD_W,LCD_H,WHITE);
 	xTaskCreate(SystemCreatTask,"SystemCreatTask",180,NULL,2,&SystemCreatTask_Handler);		
 	
 	vTaskStartScheduler();
 	while(1)
 	{
-
 	}
 }    
              

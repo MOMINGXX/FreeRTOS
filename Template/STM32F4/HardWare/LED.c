@@ -1,7 +1,7 @@
 #include "LED.h"
 
-LED_LIGHT_MODE LED_Mode[LED_NUM];
-uint32_t LED_Count[LED_NUM];
+LED_LIGHT_MODE LED_Mode[LED_NUM];      //LED模式
+uint32_t LED_Count[LED_NUM];           //LED计数    
 uint8_t LED_Compare = 0;
 uint8_t LED_Flag = 1;
 
@@ -33,7 +33,8 @@ void LED_Init()
 
 /****
 	* @brief    LED  设置亮灭模式		
-	* @param   	Mode 亮灭模式
+	* @param   	Num  LED ID   
+    * @param   	Mode 亮灭模式
 	* @return   无    	
     * Sample usage:LED_SetMode(); 
     */
@@ -46,6 +47,13 @@ void LED_SetMode(uint8_t Num,LED_LIGHT_MODE Mode)
     }
 }
 
+/****
+	* @brief    控制 LED 亮灭	
+	* @param   	Led_Num LED ID
+    * @param   	Status 状态 ON/OFF  
+	* @return   无    	
+    * Sample usage:LED_Control(); 
+    */
 static void LED_Control(uint8_t Led_Num, uint8_t Status)
 {
     if(Led_Num == LED_LEFT)
