@@ -51,6 +51,7 @@
 ".\objects\lcd.o"
 ".\objects\lcd_init.o"
 ".\objects\w25q128jv.o"
+".\objects\lcd_menu.o"
 ".\objects\lcd_spi.o"
 ".\objects\mpu6050_i2c.o"
 ".\objects\nrf24l01_spi.o"

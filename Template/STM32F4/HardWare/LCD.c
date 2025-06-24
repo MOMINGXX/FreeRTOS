@@ -26,6 +26,31 @@ void LCD_Fill(uint16_t xsta,uint16_t ysta,uint16_t xend,uint16_t yend,uint16_t c
 }
 
 /******************************************************************************
+      函数说明：居中显示字串  包括中文和英文字符
+      入口数据：x,y显示坐标
+                *s 要显示的汉字串
+                fc 字的颜色
+                bc 字的背景色
+                sizey 字号 可选 16 24 32
+                mode:  0非叠加模式  1叠加模式		（中文无效）
+      返回值：  无
+******************************************************************************/
+void Gui_StrCenter(uint16_t x, uint16_t y, char *str,uint16_t fc,uint16_t bc,uint8_t size, uint8_t mode)
+{
+	
+	uint16_t len=strlen((const char *)str);
+	uint16_t x1=(LCD_W-len*16)/2;
+	if(*str > 127)//中文字符
+	{
+		LCD_ShowGB2312_Chinese(x+x1, y, size, (uint8_t *)str, fc, bc,mode);	
+	}
+	else //英文字符
+	{	
+	    LCD_ShowString(x+x1, y, str, fc, bc, size, mode);
+	}
+}
+
+/******************************************************************************
       函数说明：在指定位置画点
       入口数据：x,y 画点坐标
                 color 点的颜色
@@ -401,9 +426,10 @@ void LCD_ShowChinese32x32(uint16_t x,uint16_t y,uint8_t *s,uint16_t fc,uint16_t 
                 bc 背景颜色
       返回值：  无
 ******************************************************************************/
-void Display_GB2312(uint16_t x,uint16_t y,uint8_t zk_num,uint16_t fc,uint16_t bc)
+void Display_GB2312(uint16_t x,uint16_t y,uint8_t zk_num,uint16_t fc,uint16_t bc,uint8_t mode)
 {
-  uint8_t i,k,n,d,m=0;
+	uint8_t i,k,n,d,m=0;
+	uint16_t x0 = x;
 	switch(zk_num)
 	{
 		// n:字符所占字节数  d：字间距
@@ -416,19 +442,36 @@ void Display_GB2312(uint16_t x,uint16_t y,uint8_t zk_num,uint16_t fc,uint16_t bc
 	{
 		for(k=0;k<8;k++)
 		{
-			if((FontBuf[i]&(0x01<<k)))
+			if(!mode)				//非叠加方式
+			{	
+				if((FontBuf[i]&(0x01<<k)))
+				{
+				  LCD_WR_DATA(fc);
+				}
+				else
+				{
+				  LCD_WR_DATA(bc);
+				}
+				m++;
+				if(m%zk_num==0)
+				{
+					m=0;
+					break;
+				}
+			}		
+			else 				//叠加方式
 			{
-			  LCD_WR_DATA(fc);
-			}
-			else
-			{
-			  LCD_WR_DATA(bc);
-			}
-			m++;
-			if(m%zk_num==0)
-			{
-				m=0;
-				break;
+				if((FontBuf[i]&(0x01<<k)))
+				{
+					LCD_DrawPoint(x,y,fc);
+				}
+				x++;
+				if((x-x0)==zk_num)
+				{
+					x=x0;
+					y++;
+					break;
+				}
 			}
 		}
 	}
@@ -443,7 +486,7 @@ void Display_GB2312(uint16_t x,uint16_t y,uint8_t zk_num,uint16_t fc,uint16_t bc
                 bc 背景颜色
       返回值：  无
 ******************************************************************************/
-void LCD_ShowGB2312_Chinese(uint16_t x,uint16_t y,uint8_t zk_num,uint8_t text[],uint16_t fc,uint16_t bc)
+void LCD_ShowGB2312_Chinese(uint16_t x,uint16_t y,uint8_t zk_num,uint8_t text[],uint16_t fc,uint16_t bc,uint8_t mode)
 {
 	uint8_t i= 0;
 	uint8_t AddrHigh,AddrMid,AddrLow ; //字高、中、低地址
@@ -468,7 +511,7 @@ void LCD_ShowGB2312_Chinese(uint16_t x,uint16_t y,uint8_t zk_num,uint8_t text[],
 			FontAddr = (unsigned long)((FontAddr*n)+BaseAdd);
 			
 			W25Q128JV_Read_Data(FontAddr,FontBuf,n );//取一个汉字的数据，存到"FontBuf[]"
-			Display_GB2312(x,y,zk_num,fc,bc);//显示一个汉字到LCD上/ 
+			Display_GB2312(x,y,zk_num,fc,bc,mode);//显示一个汉字到LCD上/ 
 		}
 		else if(((text[i]>=0xB0) &&(text[i]<=0xF7))&&(text[i+1]>=0xA1))
 		{
@@ -479,7 +522,7 @@ void LCD_ShowGB2312_Chinese(uint16_t x,uint16_t y,uint8_t zk_num,uint8_t text[],
 			FontAddr = (unsigned long)((FontAddr*n)+BaseAdd);
 			
 			W25Q128JV_Read_Data(FontAddr,FontBuf,n );//取一个汉字的数据，存到"FontBuf[]"
-			Display_GB2312(x,y,zk_num,fc,bc);//显示一个汉字到LCD上/
+			Display_GB2312(x,y,zk_num,fc,bc,mode);//显示一个汉字到LCD上/
 		}
 		x+=d; //下一个字坐标
 		i+=2;  //下个字符

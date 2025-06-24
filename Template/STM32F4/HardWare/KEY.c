@@ -99,7 +99,7 @@ static uint8_t KEY_ReadNumber()
 	* @return   无   	
 	* Sample usage:KEY_Tick(); 
     */
-/*void KEY_Tick()
+void KEY_Tick()
 {
     static uint8_t Count;                                      //定义计数变量
     static uint8_t CurrentState,PrevState;                         //定义当前状态和上一个状态变量
@@ -114,7 +114,7 @@ static uint8_t KEY_ReadNumber()
             KeyNumber = PrevState;                       	//将按键号赋值给全局变量
         }
     }
-}*/
+}
 
 /****
 	* @brief    定时器扫描	非阻塞式		  可连续读取按键
@@ -122,7 +122,7 @@ static uint8_t KEY_ReadNumber()
 	* @return   无   	
 	* Sample usage:KEY_Tick(); 
     */
-void KEY_Tick()             
+/*void KEY_Tick()             
 {
     static uint8_t NowState,LastState;
     static uint8_t Count;                                    //定义计数变量
@@ -144,7 +144,7 @@ void KEY_Tick()
         else if(LastState == 0 && NowState == 11)	{KeyNumber = 11;}
         else if(LastState == 0 && NowState == 12)	{KeyNumber = 12;}
     }
-}
+}*/
 
 #else 
 /****

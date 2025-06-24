@@ -710,6 +710,11 @@
               <FileType>1</FileType>
               <FilePath>.\HardWare\W25Q128JV.c</FilePath>
             </File>
+            <File>
+              <FileName>LCD_MENU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HardWare\LCD_MENU.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -28,7 +28,8 @@ void LCD_ShowIntNum(uint16_t x,uint16_t y,uint16_t num,uint8_t len,uint16_t fc,u
 void LCD_ShowFloatNum1(uint16_t x,uint16_t y,float num,uint8_t len,uint16_t fc,uint16_t bc,uint8_t sizey);//显示两位小数变量
 
 void LCD_ShowPicture(uint16_t x,uint16_t y,uint16_t length,uint16_t width,const uint8_t pic[]);      //显示图片
-void LCD_ShowGB2312_Chinese(uint16_t x,uint16_t y,uint8_t zk_num,uint8_t text[],uint16_t fc,uint16_t bc);
+void LCD_ShowGB2312_Chinese(uint16_t x,uint16_t y,uint8_t zk_num,uint8_t text[],uint16_t fc,uint16_t bc,uint8_t mode);   //显示汉字
+void Gui_StrCenter(uint16_t x, uint16_t y, char *str,uint16_t fc,uint16_t bc,uint8_t size, uint8_t mode);                   //在指定位置开始 居中显示字符串
 
 
 //画笔颜色
